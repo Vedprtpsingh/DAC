@@ -149,8 +149,8 @@ public class Problems {
 			int a = s.nextInt();
 			int b = s.nextInt();
 			int c = s.nextInt();
-			System.out.print("Total of Subjects is = " + totalOfThreeSub(a, b, c));
-			System.out.print("Avg of Subjects is = " + avgOfThreeSub(a, b, c));
+			System.out.println("Total of Subjects is = " + totalOfThreeSub(a, b, c));
+			System.out.println("Avg of Subjects is = " + avgOfThreeSub(a, b, c));
 			break;
 		case 4:
 			System.out.println("Problem 4. Declare two integer variables and swap their values without using a third variable (use arithmetic operators only).");
@@ -227,6 +227,7 @@ public class Problems {
 			break;
 		case 13:
 			System.out.println("Problem 13. Declare an integer and check whether the number is positive, negative, or zero.");
+			System.out.println("Enter the number: ");
 			a = s.nextInt();
 			System.out.println("The Number is " + numberPossitiveOrNegative(a));
 			break;
