@@ -1,0 +1,2 @@
+module coreJavaLabAssignment01 {
+}
