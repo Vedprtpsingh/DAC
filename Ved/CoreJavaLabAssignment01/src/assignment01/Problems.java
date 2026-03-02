@@ -3,16 +3,16 @@ package assignment01;
 import java.util.Scanner;
 
 public class Problems {
-	// --------------P1--------------
+		// --------------P1--------------
 	public static double areaOfRectangle(double length, double width) {
 
 		return length * width;
 	}
 
 	// --------------P2--------------
-	public static double clesiusToFarnheit(double celsius) {
-
-		return (celsius * (9 / 5)) + 32;
+	public static String clesiusToFarnheit(double celsius) {
+		double f=(celsius * (1.8)) + 32;
+		return String.format("%.2f",f);
 	}
 
 	// --------------P3--------------
@@ -156,7 +156,7 @@ public class Problems {
 			System.out.println("Problem 4. Declare two integer variables and swap their values without using a third variable (use arithmetic operators only).");
 			System.out.println("Enter the Num 1 :");
 			a = s.nextInt();
-			System.out.println("Enter the Num 1 :");
+			System.out.println("Enter the Num 2 :");
 			b = s.nextInt();
 			intSwap(a, b);
 			break;
@@ -197,6 +197,7 @@ public class Problems {
 			System.out.println("Enter the Time :");
 			a = s.nextInt();
 			System.out.println("Simple Intrest = " + productValuesi(x, y, a));
+			System.out.println("The product value is: "+productValue(x, y, a));
 			break;
 		case 10:
 			System.out.println("Problem 10. Declare age (int) and display whether the person is Child, Teenager, or Adult using if-else-if ladder.");
