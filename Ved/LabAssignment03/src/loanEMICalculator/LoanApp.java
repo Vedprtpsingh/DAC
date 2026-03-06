@@ -7,5 +7,4 @@ public class LoanApp {
 		Loan.EMICalculator inner=l.new EMICalculator();
 		System.out.println(inner.emi(l.loanAmount,l.interestRate,l.loanTenure));
 	}
-
 }

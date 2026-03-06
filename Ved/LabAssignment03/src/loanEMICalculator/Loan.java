@@ -6,9 +6,7 @@ public class Loan {
 		public double emi(int loanAmount, double interestRate, double loanTenure) {
 			return (loanAmount*interestRate*loanTenure)/100;
 		}
-		
 	}
-
 	int loanAmount;
 	double interestRate;
 	double loanTenure;
