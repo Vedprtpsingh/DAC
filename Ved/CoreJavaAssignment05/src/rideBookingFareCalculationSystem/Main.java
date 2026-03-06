@@ -1,65 +1,78 @@
 package rideBookingFareCalculationSystem;
 class Ride{
 	int rideId;String passengerName;
-
-	public Ride(int rideId, String passengerName) {
+	double distance;
+	
+	public Ride(int rideId, String passengerName, double distance) {
+		super();
 		this.rideId = rideId;
 		this.passengerName = passengerName;
+		this.distance=distance;
 	}
-	
-	@Override
-	public String toString() {
-		return "Ride [rideId=" + rideId + ", passengerName=" + passengerName + "]";
+	void  rideDetails() {
+		System.out.println("Ride ID: "+rideId+", Passenger Name: "+passengerName+", Total Distance: "+distance);
 	}
-
-	void calculateFare(double distance) {
-		System.out.println("Fare of the ride is: "+(distance*18));
+	double calculateFare(double distance) {
+		return 0;
 	}
 }
 class BikeRide extends Ride{
 	String driverName;
-	int bikeRidePrice;
-	public BikeRide(int rideId, String passengerName, String driverName, int bikeRidePrice) {
-		super(rideId, passengerName);
+	int bikeRidePricePerKM;
+	public BikeRide(int rideId, String passengerName, double distance, String driverName, int bikeRidePricePerKM) {
+		super(rideId, passengerName, distance);
 		this.driverName = driverName;
-		this.bikeRidePrice = bikeRidePrice;
+		this.bikeRidePricePerKM = bikeRidePricePerKM;
 	}
 	@Override
-	public String toString() {
-		return "BikeRide [driverName=" + driverName + ", bikeRidePrice=" + bikeRidePrice + ", rideId=" + rideId
-				+ ", passengerName=" + passengerName + "]";
+	double calculateFare(double distance) {
+		return distance*bikeRidePricePerKM;
 	}
-
 	
 }
 class CabRide extends Ride{
 	String driverName;
-	int carRidePrice;
-	public CabRide(int rideId, String passengerName, String driverName, int carRidePrice) {
-		super(rideId, passengerName);
+	int carRidePricePerKM;
+	public CabRide(int rideId, String passengerName, double distance, String driverName, int carRidePricePerKM) {
+		super(rideId, passengerName, distance);
 		this.driverName = driverName;
-		this.carRidePrice = carRidePrice;
+		this.carRidePricePerKM = carRidePricePerKM;
 	}
+
+
 	@Override
 	public String toString() {
 		return "CabRide [driverName=" + driverName + ", carRidePrice=" + carRidePrice + ", rideId=" + rideId
 				+ ", passengerName=" + passengerName + "]";
 	}
+
+
+	@Override
+	double calculateFare(double distance) {
+		// TODO Auto-generated method stub
+		return distance*carRidePricePerKM;
+	}
+	
 	
 	
 }
 class AutoRide extends Ride{
 	String driverName;
-	int autoRidePrice;
-	public AutoRide(int rideId, String passengerName, String driverName, int autoRidePrice) {
-		super(rideId, passengerName);
+	int autoRidePricePerKM;
+	public AutoRide(int rideId, String passengerName, double distance, String driverName, int autoRidePricePerKM) {
+		super(rideId, passengerName, distance);
 		this.driverName = driverName;
-		this.autoRidePrice = autoRidePrice;
+		this.autoRidePricePerKM = autoRidePricePerKM;
 	}
 	@Override
 	public String toString() {
 		return "AutoRide [driverName=" + driverName + ", autoRidePrice=" + autoRidePrice + ", rideId=" + rideId
 				+ ", passengerName=" + passengerName + "]";
+	}
+	@Override
+	double calculateFare(double distance) {
+		// TODO Auto-generated method stub
+		return distance*autoRidePricePerKM;
 	}
 
 	
@@ -68,12 +81,7 @@ class AutoRide extends Ride{
 public class Main {
 
 	public static void main(String[] args) {
-		BikeRide br=new BikeRide(101, "Ved", "Mr.Shan", 10);
-		System.out.println(br.toString());
-		CabRide cr=new CabRide(102, "Abhi", "natan", 2);
-		System.out.println(cr.toString());
-		AutoRide ar=new AutoRide(103, "Shivam", "askfklan", 10);
-		System.out.println(ar.toString());
+		
 	}
 
 }
