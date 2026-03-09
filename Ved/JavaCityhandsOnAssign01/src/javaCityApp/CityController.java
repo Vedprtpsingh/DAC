@@ -11,7 +11,7 @@ public class CityController {
 		c5.showCitizen();
 		c1.setAge(2);
 		c1.showCitizen();
-		System.out.println(c1.changePassword("Ved1253", "new"));
+		c1.changePassword("Ved1253", "new");
 		
 		
 		Vehicles v=new Vehicles(12, 2);
@@ -37,6 +37,10 @@ public class CityController {
 		}
 		
 		
+		VetCheck vc=new VetCheck();
+		vc.checkHealth(animal[0]);
+		vc.checkHealth(animal[3]);
+		
 		
         SmartRoom room = new SmartRoom(new Speaker(), new LightBulb());
 
@@ -44,6 +48,8 @@ public class CityController {
         room.pressWallSwitch();
 
         room.partyMode();
+        
+        
 		
 	}
 }

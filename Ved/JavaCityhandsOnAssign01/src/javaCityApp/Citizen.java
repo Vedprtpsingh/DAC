@@ -15,12 +15,12 @@ public class Citizen {
 		citizenCount++;
 		this.password = password;
 	}
-	public boolean changePassword(String oldPass,String newPass) {
+	public void changePassword(String oldPass,String newPass) {
 		if(oldPass==this.password) {
 			password=newPass;
-			return true;
+			System.out.println("Password Change Successfuly");
 		}
-		return false;
+		System.out.println("Password not Match");
 	}
 	public int getAge() {
 		return age;
