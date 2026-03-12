@@ -9,9 +9,7 @@ public class CallByValue {
 		System.out.println("Before change a = "+a+" b = "+b);
 		change(a,b);
 		System.out.println("Ater change a = "+a+" b = "+b);
-
 	}
-
 	private static void change(int a, int b) {
 		a=3;
 		b=2;

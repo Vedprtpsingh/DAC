@@ -1,7 +1,4 @@
 package trainStationStopManagement;
-
-import java.util.LinkedList;
-
 public class Main {
 
 	public static void main(String[] args) {
@@ -38,5 +35,4 @@ public class Main {
 		sm.removeStation(106);
 		sm.displayStations();
 	}
-
 }

@@ -8,7 +8,9 @@ public class ReverseAnArray {
 		Scanner sc=new Scanner(System.in);
 		int n=sc.nextInt();
 		int[] array=createArray(n);
+		System.out.print("Array: ");
 		printArray(array);
+		System.out.print("Reverse Array: ");
 		reverseArray(array);
 		printArray(array);
 	}

@@ -9,9 +9,9 @@ public class UpdateArrayAElement {
 		Scanner sc=new Scanner(System.in);
 		int n=sc.nextInt();
 		int[] array=ReverseAnArray.createArray(n);
-		System.out.println("Enter the index: ");
+		System.out.println("Enter the index for Update: ");
 		int i=sc.nextInt();
-		System.out.println("Enter the ELement: ");
+		System.out.println("Enter the ELement for Update: ");
 		int ele=sc.nextInt();
 		System.out.println("Array before updating");
 		ReverseAnArray.printArray(array);
