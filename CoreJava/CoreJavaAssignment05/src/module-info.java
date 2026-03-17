@@ -1,0 +1,2 @@
+module CoreJavaAssignment05 {
+}

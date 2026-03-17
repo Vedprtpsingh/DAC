@@ -1,0 +1,2 @@
+module CoreJavaLectureProblem01 {
+}
