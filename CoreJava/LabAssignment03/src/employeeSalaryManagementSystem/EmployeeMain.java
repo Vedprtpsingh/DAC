@@ -13,8 +13,6 @@ public class EmployeeMain {
 //		System.out.println("Basic Salary "+e.basicSalary);
 //		
 		Employee.SalaryCalculator inner=e.new SalaryCalculator();
-		
 		inner.Calculator();
-		
 	}
 }

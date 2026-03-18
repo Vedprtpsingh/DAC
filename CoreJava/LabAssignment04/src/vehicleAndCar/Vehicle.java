@@ -9,7 +9,8 @@ public class Vehicle {
 		this.brand = brand;
 	}
 	void showVehicleInfo(Vehicle v) {
-		System.out.println("Car Number: "+vehicleNumber+", Brand: "+brand);
+		System.out.println("Car Number: "+vehicleNumber);
+		System.out.println("Brand: "+brand);
 		
 	}
 }
