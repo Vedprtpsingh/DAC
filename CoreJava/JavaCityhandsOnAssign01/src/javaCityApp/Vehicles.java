@@ -1,14 +1,10 @@
 package javaCityApp;
-
 public class Vehicles {
 	int speed,feul;
-	
 	public Vehicles(int speed, int feul) {
-		super();
 		this.speed = speed;
 		this.feul = feul;
 	}
-
 	public void move() {
 		System.out.println("Vehicle is moving");
 	}
@@ -18,7 +14,6 @@ public class Vehicles {
 	}
 }
 class Bicycle extends Vehicles{
-
 	public Bicycle(int speed, int feul) {
 		super(speed, feul);
 	}
@@ -27,7 +22,6 @@ class Bicycle extends Vehicles{
 	}
 }
 class Car extends Vehicles{
-
 	public Car(int speed, int feul) {
 		super(speed, feul);
 	}

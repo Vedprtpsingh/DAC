@@ -18,12 +18,11 @@ class ShopingMall extends Building implements PowerConsumer{
 			System.out.println( "High usage warning!");
 		}
 		else {
-			System.out.println("Usage still in limts");
+			System.out.println("Usage still in limits");
 		}
 	}
 }
 class TinyHouse implements PowerConsumer{
-
 	@Override
 	public void consumeEnergy(int watts) {
 		System.out.println("Powering the lights.");

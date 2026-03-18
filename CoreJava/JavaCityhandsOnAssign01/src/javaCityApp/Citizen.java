@@ -3,11 +3,11 @@ package javaCityApp;
 public class Citizen {
 	private String name;
 	private int age;
-	private double voterID;
+	private String voterID;
 	private String password;
 	private static int citizenCount=0;
 	
-	public Citizen(String name, int age, double voterID, String password) {
+	public Citizen(String name, int age, String voterID, String password) {
 		super();
 		this.name = name;
 		this.age = age;
@@ -15,12 +15,12 @@ public class Citizen {
 		citizenCount++;
 		this.password = password;
 	}
-	public boolean changePassword(String oldPass,String newPass) {
+	public void changePassword(String oldPass,String newPass) {
 		if(oldPass==this.password) {
 			password=newPass;
-			return true;
+			System.out.println("Password Change Successfuly");
 		}
-		return false;
+		System.out.println("Password not Match");
 	}
 	public int getAge() {
 		return age;

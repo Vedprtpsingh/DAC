@@ -1,8 +1,6 @@
 package javaCityApp;
-
 public class SmartHome {
 }
-
 class LightBulb {
     boolean isOn;
     void toggle() {
@@ -14,20 +12,16 @@ class LightBulb {
         }
     }
 }
-
 class SmartRoom {
     private Speaker speaker;
     private LightBulb roomLight;
-
     public SmartRoom(Speaker speaker, LightBulb roomLight) {
         this.speaker = speaker;
         this.roomLight = roomLight;
     }
-
     void pressWallSwitch() {
         roomLight.toggle();
     }
-
     void partyMode() {
         if (!roomLight.isOn) {
             roomLight.toggle();
@@ -35,7 +29,6 @@ class SmartRoom {
         speaker.playMusic();
     }
 }
-
 class Speaker {
     void playMusic() {
         System.out.println("Music is Playing");
