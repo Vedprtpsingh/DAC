@@ -9,7 +9,6 @@ int main(){
     
     for(int i=0;i<SIZE;i++){
         arr[i]=(rand()%2000);
-        totalbefore+=arr[i];
     }
     int mostexpensive=arr[0],leastexpensive=arr[0];
     display(arr);
@@ -43,10 +42,10 @@ int main(){
     int removeitem;
     cout<<"Enter The index for remove"<<endl;
     cin>>removeitem;
-    if(removeitem>SIZE-1){
+    if(removeitem>SIZE){
         cout<<"Index is not Found"<<endl;
     }else{
-        arr[removeitem]=0;
+        arr[removeitem-1]=0;
     }
     display(arr);
 
