@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class ReadMain {
 
-	public static void main(String[] args) throws IOException {
+	public void readFile() throws IOException {
 		FileReader fr=new FileReader("Student.text");
 		BufferedReader br=new BufferedReader(fr);
 		String[] stu=new String[5];
