@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <title>Assignment 2</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="p-4">
+    <main class="container">
+      <div class="skill-field mb-3">
+        <label class="me-2 fs-5 fw-bold">Skill</label>
+        <input
+          type="text"
+          id="skillInput"
+          class="form-control me-2"
+          placeholder="Enter Skill"
+        />
+        <button class="btn btn-primary" onclick="addSkill()">Add</button>
+      </div>
+      <div id="skillsContainer" class="skills-box">
+        <div class="skill-tag">
+          Web Programming
+          <span class="remove-btn" onclick="removeSkill(this)">&#10060;</span>
+        </div>
+      </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
