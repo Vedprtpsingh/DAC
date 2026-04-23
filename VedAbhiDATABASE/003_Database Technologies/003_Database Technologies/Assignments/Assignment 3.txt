@@ -1,0 +1,19 @@
+1 How can you find only the departments that currently have no employees assigned to them?
+
+2.List Employees Who Are Both Managers and Analysts (Using INTERSECT)
+
+3.Employees Who Work in Same Department as ‘SCOTT’ and ‘KING’(Using INTERSECT)
+
+4.List Employees in Dept 10 or Having Salary > 3000 (Using UNION)
+
+5.Find Employees Who Do NOT Belong to Any Department
+
+6.List Departments with Total Salary Greater Than 2000
+
+7.Show Dept with Highest Total Salary
+
+8.Display Total Commission Paid Department-wise
+
+9.Show Departments Where Average Salary is Greater Than Overall Average
+
+10.Departments Where At Least One Employee Earns More Than 4000

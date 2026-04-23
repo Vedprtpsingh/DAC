@@ -1,0 +1,19 @@
+What is a CTE?
+
+CTE = Common Table Expression
+
+Think of it as a temporary named result set (like a temporary table) that exists only for the duration of a single query.
+
+CTE (Common Table Expression): A temporary result set used only within a single query; cannot be modified and disappears after query execution.
+
+TEMP TABLE: A temporary table stored for the entire session, can be modified, indexed, and reused across multiple queries; dropped manually or at session end.
+
+
+WITH high_salary AS (
+    SELECT ename, sal
+    FROM emp
+    WHERE sal > 3000
+)
+SELECT * 
+FROM high_salary
+ORDER BY sal DESC;

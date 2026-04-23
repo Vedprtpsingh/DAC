@@ -1,0 +1,19 @@
+1) List employees who have the same job title as any employee working in 'CHICAGO'.
+
+2)List the names of employees who report to a manager based in 'NEW YORK'.
+
+3)List the names and salaries of employees who earn more than the average salary of the entire company.
+
+4)Find all employees who hold the same job as 'SMITH' but earn a different salary than him.
+
+5)List all employees who were hired after the employee 'ADAMS' was hired.
+
+6)Find the names of employees who work in the same department as the employee who earns the highest commission.
+
+7)Show the names of employees whose salary is exactly equal to the minimum salary in the company.
+
+8)Find all employees who have the same manager as 'FORD'.
+
+9)Display the employee names who work in the same department as 'SCOTT'.
+
+10)Find the names of all employees hired in the same year as 'JAMES'

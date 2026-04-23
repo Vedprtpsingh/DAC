@@ -1,0 +1,30 @@
+Think of Database Design as the "Architecture" phase of building a digital warehouse. If you just throw data into a folder without a plan, you'll eventually lose things or end up with a mess. Database design ensures that data is stored efficiently, remains accurate, and is easy to retrieve.
+
+What is Database Design?
+It is the process of producing a detailed data model of a database. This involves determining what data needs to be stored and how the data elements interrelate.
+
+A good design aims for:
+
+No Redundancy: You shouldn't store the same customer’s address in five different places.
+
+Data Integrity: Ensuring that if you delete a customer, you don't leave "orphan" orders behind that belong to nobody.
+
+Performance: Organizing tables so the computer doesn't have to search through millions of rows just to find one name.
+
+What is an Entity-Relationship Diagram (ERD)?
+The ERD is the most popular tool used during the design phase. It is a visual map that shows how "entities" (things) act upon one another.
+
+If Database Design is the process, the ERD is the blueprint.
+
+The Three Main Components:
+Entities (The Nouns): These are the objects or concepts you want to track. In a diagram, they are usually Rectangles.
+
+Examples: Student, Course, Professor.
+
+Attributes (The Adjectives): These are the specific pieces of information about an entity. In a diagram, they are usually Ovals.
+
+Examples: Student_Name, Date_of_Birth, Email.
+
+Relationships (The Verbs): This shows how entities interact. In a diagram, they are usually Diamonds or lines connecting the rectangles.
+
+Examples: A Student Enrolls in a Course.

@@ -1,0 +1,21 @@
+1)List all employees, ordered by their HIREDATE from newest to oldest.
+
+2)List all employees who work in 'DALLAS'.
+
+3)Find all employees who were hired in the year 1981.
+
+4)List the DNAME and LOC from the DEPT table, ordered alphabetically by location.
+
+5)List all employees who do not work in Department 10.
+
+6)Display all employees who were hired after January 1st, 1982.
+
+7)Show what each employee’s salary would be if they were given a 15% raise. Display the ENAME, SAL, and the NEW_SAL.
+
+8)List all employees, sorted first by their Department Number (ascending) and then by their Salary (descending).
+
+9)List all employees whose total monthly income (Salary + Commission) is greater than 1500.
+
+
+10)Find all 'SALESMAN' who earn a salary that is not between 1200 and 1500.
+

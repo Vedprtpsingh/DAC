@@ -1,0 +1,20 @@
+1)Find all employees whose last names start with 'A' and who 
+work in department No 10 or 30.
+
+2)Write a SQL query to display the department name, salary grade, and the total number of employees belonging to each grade within each department.
+
+3)Retrieve the names of all employees, their department names, and their specific salary grade, but only for those employees who fall into Grade 4 or Grade 5.
+
+4)List the names of all employees (ENAME) along with their Department Names (DNAME), but only for those working in 'NEW YORK' or 'CHICAGO'.
+
+5)List the names of all employees who do not have a manager (their MGR column is NULL).
+
+6)Find employees whose salary is greater than 2000 and show their department names.
+
+7)Display employees working in "ACCOUNTING" with their salary grade.
+
+8)List employee name and department name in ascending order of employee name.
+
+9)List employees working in department number 10 with their dnames and salaries and grades.
+
+10)Show employee name, department name, and salary sorted by salary in descending order.

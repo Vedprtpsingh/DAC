@@ -1,0 +1,20 @@
+In MySQL, a Storage Engine is the underlying software component that the database uses to handle the actual SQL operations (storing, retrieving, and updating data) on the physical disk.
+
+Unlike other databases, MySQL allows you to choose different engines for different tables within the same database!
+
+The Big Two: InnoDB vs. MyISAM
+InnoDB is the modern, "all-purpose" storage engine and has been the default for MySQL since version 5.5. Its primary strength lies in Data Integrity and Concurrency. It is a transactional engine, meaning it supports features like COMMIT and ROLLBACK, which ensure that a series of database operations either all succeed or all fail together—this is vital for systems like banking or e-commerce. Furthermore, InnoDB uses Row-Level Locking; when one user is updating a specific row, other users can still edit different rows in the same table simultaneously. It also strictly enforces Foreign Key constraints, making it the go-to choice for complex, relational data where accuracy is non-negotiable.
+
+MyISAM, on the other hand, is the "legacy" engine that was the MySQL default for many years. It is a non-transactional engine, making it simpler and sometimes faster for read-heavy workloads (like a simple blog or a data warehouse) where data is rarely updated. However, its biggest drawback is Table-Level Locking. If a user is writing a single piece of data to a MyISAM table, the entire table is locked and inaccessible to other writers until that operation finishes. It also lacks support for Foreign Keys and does not have a built-in crash recovery log, meaning a sudden power loss can easily lead to corrupted data files. Today, MyISAM is mostly used for specialized cases where high-speed searching and low disk space are more important than data safety.'
+
+--------------------------------------------------
+
+SHOW TABLE STATUS LIKE 'your_table_name';
+
+CREATE TABLE log_data (
+    id INT PRIMARY KEY,
+    entry_text TEXT
+) ENGINE = MyISAM;
+
+ALTER TABLE my_old_table ENGINE = InnoDB;
+
