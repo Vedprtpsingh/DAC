@@ -1,0 +1,32 @@
+Find The Top 3 Salary Taking Employees
+-------------------------------------------------------
+SELECT * 
+FROM (
+  SELECT ename, sal 
+  FROM emp 
+  ORDER BY sal DESC
+) 
+WHERE ROWNUM <= 3;
+------------------------------------------------------------
+
+Find all salaries that are shared by more than one employee, along with how many employees earn that salary
+----------------------------------------------------------
+SELECT ename, sal
+FROM emp
+ORDER BY sal DESC
+LIMIT 3;
+---------------------------------------------------
+Find the employee(s) who were hired first in the company.
+SELECT ename, deptno, hiredate
+FROM emp
+WHERE hiredate = (
+  SELECT MIN(hiredate) 
+  FROM emp
+);
+----------------------------------------------------------------------------------
+Display the employee hierarchy starting from top-level managers, indenting subordinates according to their level
+-----------------------------------------------------------------------------------
+SELECT e.ename AS employee, m.ename AS manager
+FROM emp e
+LEFT JOIN emp m ON e.mgr = m.empno
+ORDER BY m.ename, e.ename;

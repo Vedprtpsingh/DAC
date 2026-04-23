@@ -1,0 +1,11 @@
+In MySQL, a Trigger is a named database object that is associated with a table and activates automatically when a specific event (like INSERT, UPDATE, or DELETE) occurs for that table.
+
+Think of a trigger as your "set it and forget it" tool for maintaining data integrity. Here are the three main reasons they exist
+1):Auditing: Whenever a user Does Some Transactions On A
+Table We Can Track it.
+
+2)Data Validation: If someone tries to set a product price or salary to negative number we can stop it.
+
+3)Security: To ensure Security On Tables Like No Transactions
+Should Take Place On Sunday. Transactions Not Allowed Before
+or After Office Timing etc

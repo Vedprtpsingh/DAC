@@ -1,0 +1,29 @@
+A MySQL cursor is a powerful database object designed for retrieving, processing, and managing rows from a result set one at a time. Unlike standard SQL queries that handle sets of rows in bulk, cursors allow for detailed row-by-row operations. 
+
+1)This can be very useful for complicated data manipulations and procedural logic.
+
+2)Cursors enable the user to fetch and process each row individually, allowing for detailed manipulation and analysis of data.
+
+3)By using cursors, developers can precisely control the flow of data processing, such as updating or analyzing specific rows based on custom criteria.
+
+Steps
+------
+1)Declare the Cursor
+-------------------------
+A cursor is declared within a stored procedure or function using a CURSOR statement. This binds the cursor to a specified SQL query.
+
+Syntax
+------------
+DECLARE cursor_name CURSOR FOR select_statement;
+
+2)Open the Cursor
+You need to open the cursor before you fetch rows from it. You do this with the OPEN statement.
+
+OPEN cursor_name;
+
+3)Fetch the Data from the Cursor
+The FETCH statement retrieves the data from the cursor and moves the cursor to the next line in the result set; it loads the data into variables.
+
+FETCH cursor_name INTO variable1, variable2, ...;
+
+4)CLOSE cursor_name;

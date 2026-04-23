@@ -1,0 +1,25 @@
+The most commonly used data types in MySQL fall into three main categories: Numeric, String, and Date and Time. 
+
+Numeric Types
+------------------
+INT: The standard integer type, suitable for most general-purpose whole numbers, such as IDs or counts.
+
+DECIMAL: For exact numeric values, crucial for financial or monetary data where precision is essential.
+
+FLOAT and DOUBLE: Used for approximate, floating-point numbers, typically for scientific or measurement data where some precision loss is acceptable. 
+-----------------------------------------------------------------------------------
+String Types
+---------------
+CHAR(size): A fixed-length string, suitable for data with consistent length, such as country codes or hashes.
+
+VARCHAR(size): A variable-length string, efficient for data like names or addresses where the length varies. You must define a maximum length.
+
+TEXT: For storing larger amounts of text, such as product descriptions 
+Date and Time Types
+-------------------------------------------------------------------------------------
+Date Types
+--------------
+DATE: Stores a date only, in YYYY-MM-DD format.
+DATETIME: Stores both date and time, in YYYY-MM-DD HH:MM:SS format.
+
+TIMESTAMP: Similar to DATETIME, but values are automatically converted between the server's time zone and UTC, making it useful for tracking consistent moments in time across different regions. 

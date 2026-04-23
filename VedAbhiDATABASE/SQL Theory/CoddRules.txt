@@ -1,0 +1,58 @@
+Think of E.F. Codd’s 12 Rules (actually 13, since they start at zero!) as the "Bill of Rights" for Relational Databases. Back in the 80s, Codd wanted to set a gold standard to distinguish a true Relational Database Management System (RDBMS) from systems that were just pretending to be relational.
+
+The Foundation
+Rule 0: The Foundation Rule – The system must be able to manage the database entirely through its relational capabilities. If it needs help from other types of systems to function, it’s not a true RDBMS.
+
+Data Management
+Rule 1: Information Representation – Everything (including table names and column names) must be stored as data in tables.
+
+Rule 2: Guaranteed Access – Every single piece of data must be reachable using a combination of the Table Name, Primary Key, and Column Name. No "guessing" where data is.
+
+Rule 3: Systematic Treatment of Nulls – The system must handle missing data (NULL) consistently, treating it as "unknown" or "not applicable," not just as a zero or a blank space.
+
+The System Rules
+Rule 4: Dynamic Online Catalog – The database description (metadata) must be stored just like regular data, so users can query it using the same language (SQL).
+
+Rule 5: Comprehensive Data Sublanguage – There must be at least one language (like SQL) that handles everything: defining data, manipulating it, security, and integrity.
+
+Rule 6: View Updating – If you can update a table, you should theoretically be able to update a "View" (a virtual table) created from it, provided it’s logically possible.
+
+Integrity and Independence
+Rule 7: High-level Insert, Update, and Delete – The system must be able to handle data in sets (multiple rows at once), not just one record at a time.
+
+Rule 8: Physical Data Independence – Changing how data is physically stored (like moving it to a different hard drive) shouldn't break your applications.
+
+Rule 9: Logical Data Independence – You should be able to change the table structure (like adding a column) without breaking the programs that use the data.
+
+Rule 10: Integrity Independence – Rules (like "Price cannot be negative") should be stored in the database itself, not coded into the application.
+
+Distribution and Safety
+Rule 11: Distribution Independence – If the database is split across multiple locations, the user shouldn't notice. It should look like one single database.
+
+Rule 12: Nonsubversion Rule – You can't "cheat." If there is a low-level way to access the data, it shouldn't be allowed to bypass the security and integrity rules set by the RDBMS.
+------------------------------------------------------------------------------
+How Many Rules Are Supported By MySQL
+------------------------------------------------------------------------------
+MySQL does not support all of Codd's Rules. In fact, almost no commercial database (including Oracle or SQL Server) is 100% compliant. Most modern RDBMSs satisfy about 8 to 10 of the rules.
+
+MySQL is often called a "Relational" database, but it is more accurately a "Practical" Relational system. It prioritizes performance and ease of use over the rigid academic purity Codd envisioned.
+
+Where MySQL Wins (Supported Rules)
+Rule 1 (Information): Everything in MySQL is a table.
+
+Rule 2 (Guaranteed Access): Primary keys ensure you can find any specific cell.
+
+Rule 4 (Online Catalog): You can query the information_schema to see your table structures.
+
+Rule 5 (Comprehensive Language): MySQL uses SQL for everything.
+
+Rule 8 & 9 (Independence): You can change the underlying storage engine (like moving from MyISAM to InnoDB) without changing your SQL queries.
+
+Where MySQL Struggles (Partial or No Support)
+Rule 3 (Systematic Treatment of Nulls): While MySQL supports NULL, its behavior can be quirky. For example, in certain "strict" modes or older versions, it might try to replace a null with a default value (like 0 or an empty string) rather than treating it as a true "unknown."
+
+Rule 6 (View Updating): MySQL allows you to update views, but there are many "buts." If the view contains joins, subqueries, or certain functions, it becomes non-updatable.
+
+Rule 10 (Integrity Independence): For a long time, MySQL ignored CHECK constraints (it would parse them but not enforce them). While this is fixed in newer versions (8.0+), it was a major violation for years.
+
+Rule 12 (Nonsubversion): This is the "no cheating" rule. Because MySQL allows various storage engines and low-level file manipulations, it is sometimes possible to bypass the SQL layer's integrity checks, which Codd hated.

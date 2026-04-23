@@ -1,0 +1,29 @@
+1. What is an Index?
+---------------------------
+An index is a small, separate data structure (usually a B-Tree) that stores the values of a specific column and a pointer to where that row lives on the disk. It speeds up data retrieval at the cost of additional disk space and slightly slower writes.
+
+2. Benefits of Indexes
+---------------------------
+Speed: Queries that take seconds can drop to milliseconds.
+Efficiency: The database engine does less "work" (I/O operations) to find what it needs.
+
+Uniqueness: Unique indexes prevent duplicate data from entering a column.
+
+Sorting: 
+Indexes help the database perform ORDER BY and GROUP BY operations much faster.
+
+3. Types of Indexes
+-------------------------
+Primary IndexAutomatically created on the Primary Key. It is unique and cannot be NULL.
+
+Unique IndexEnsures all values in a column are different (e.g., Email or Social Security Number).
+
+Composite IndexAn index on multiple columns (e.g., Indexing last_name AND first_name together).Full-Text IndexUsed for searching large blocks of text (like finding a word inside a book's paragraph).
+
+Clustered IndexDefines how the actual data is physically stored on the disk (In InnoDB, the Primary Key is the Clustered Index)
+
+-- Create a standard index on the 'email' column
+CREATE INDEX idx_name ON emp(ename);
+
+-- Create a unique index
+CREATE UNIQUE INDEX idx_uname ON emp(ename);

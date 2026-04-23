@@ -1,0 +1,52 @@
+Database normalization is an important process used to organize and structure relational databases. This process ensures that data is stored in a way that minimizes redundancy, simplifies querying, and improves data integrity.
+
+It also helps you eliminate undesirable characteristics associated with insertion, deletion, and updating.
+
+ In normalization, the data is divided into several tables linked together with relationships.
+
+Normalization is commonly used when dealing with large datasets.
+
+Why Normalization?
+----------------------------
+Data integrity
+-----------------
+Imagine a database that contains customer information. Without normalization, if a customer changes their age, we would need to update it in multiple places, which would increase the risk of inconsistencies.
+
+Efficiency querying
+------------------------
+Let’s consider a complex database with multiple related tables that stores redundant information. In this scenario, queries involving joins become more complicated and resource-intensive. Normalization will help simplify querying by breaking down data into smaller tables, with each table containing only relevant information, thereby reducing the need for complex joins.
+
+Storage optimization
+------------------------------
+A major problem with redundant data is that it occupies unnecessary storage space. For instance, if we store the same product details in every order record, it leads to duplication. With normalization, you can eliminate redundancy by splitting data into separate tables.
+
+
+What is 1NF 2NF and 3NF?
+-----------------------------------
+1NF, 2NF, and 3NF are the first three types of database normalization. They stand for first normal form, second normal form, and third normal form, respectively.
+
+
+The First Normal Form – 1NF
+-----------------------------------------
+For a table to be in the first normal form, it must meet the following criteria:
+
+a single cell must not hold more than one value (atomicity)
+there must be a primary key for identification
+no duplicated rows or columns
+each column must have only one value for each row in the table
+The Second Normal Form – 2NF
+The 1NF only eliminates repeating groups, not redundancy. That’s why there is 2NF.
+
+A table is said to be in 2NF if it meets the following criteria:
+----------------------------------------------------------------------------
+it’s already in 1NF
+has no partial dependency. That is, all non-key attributes are fully dependent on a primary key.
+The Third Normal Form – 3NF
+When a table is in 2NF, it eliminates repeating groups and redundancy, but it does not eliminate transitive partial dependency.
+
+This means a non-prime attribute (an attribute that is not part of the candidate’s key) is dependent on another non-prime attribute. This is what the third normal form (3NF) eliminates.
+
+So, for a table to be in 3NF, it must:
+--------------------------------------------------
+be in 2NF
+have no transitive partial dependency.

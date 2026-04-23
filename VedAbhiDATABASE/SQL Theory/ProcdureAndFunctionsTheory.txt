@@ -1,0 +1,3 @@
+A Stored Procedure is a collection of SQL statements grouped together to perform a specific task. They are the "workhorses" of MySQL—they don’t necessarily have to return a value; they just get the job done.
+
+A Stored Function is a set of SQL statements designed to perform a calculation and must return a single value. They are much more "polite" and restricted than procedures.
