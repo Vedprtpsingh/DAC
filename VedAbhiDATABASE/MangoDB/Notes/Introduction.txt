@@ -1,0 +1,14 @@
+The MongoDB is an open-source document database and leading NoSQL database. MongoDB is
+ written in C++
+
+The MongoDB is a multipurpose dataset that is used for modern application development 
+and cloud environments. 
+
+MongoDB is a non-relational database management system that stores the data in flexible 
+JSON documents.
+
+MongoDB supports wide range of platforms, that are useful for developing various environments.
+
+Operating System performs Windows 7 And Higher and Linux with various distributions.
+
+Cloud Platform in MongoDB manages data-base-as-a-service available in Google, AWS and Azure.

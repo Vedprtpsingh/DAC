@@ -1,0 +1,155 @@
+1) List employees who have the same job title as any employee working in 'CHICAGO'.
+SELECT ename, job from emp where job in (select job from emp where deptno=(select deptno from dept where loc='chicago'));
++--------+----------+
+| ename  | job      |
++--------+----------+
+| SMITH  | CLERK    |
+| ALLEN  | SALESMAN |
+| WARD   | SALESMAN |
+| JONES  | MANAGER  |
+| MARTIN | SALESMAN |
+| BLAKE  | MANAGER  |
+| CLARK  | MANAGER  |
+| TURNER | SALESMAN |
+| ADAMS  | CLERK    |
+| JAMES  | CLERK    |
+| MILLER | CLERK    |
++--------+----------+
+11 rows in set (0.00 sec)
+
+
+
+2)List the names of employees who report to a manager based in 'NEW YORK'.
+
+
+select ename from emp where mgr in (select empno from emp natural join dept where job='MANAGER' and deptno=(select deptno from dept where loc='new york'));
++--------+
+| ename  |
++--------+
+| MILLER |
++--------+
+1 row in set (0.00 sec)
+
+
+
+3)List the names and salaries of employees who earn more than the average salary of the entire company.
+
+select ename, sal from emp where sal>(select avg(sal) from emp);
++-------+---------+
+| ename | sal     |
++-------+---------+
+| JONES | 2975.00 |
+| BLAKE | 2850.00 |
+| CLARK | 2450.00 |
+| SCOTT | 3000.00 |
+| KING  | 5000.00 |
+| FORD  | 3000.00 |
++-------+---------+
+6 rows in set (0.00 sec)
+
+
+
+
+
+4)Find all employees who hold the same job as 'SMITH' but earn a different salary than him.
+
+mysql> select ename,job,sal from emp where job=(select job from emp where ename='SMITH') and sal!=(select sal from emp where ename='SMITH');
++--------+-------+---------+
+| ename  | job   | sal     |
++--------+-------+---------+
+| ADAMS  | CLERK | 1100.00 |
+| JAMES  | CLERK |  950.00 |
+| MILLER | CLERK | 1300.00 |
++--------+-------+---------+
+3 rows in set (0.01 sec)
+
+5)List all employees who were hired after the employee 'ADAMS' was hired.
+
+ select ename,hiredate from emp where hiredate>(select hiredate from emp where ename='ADAMS');
+Empty set (0.00 sec)
+
+
+
+
+6)Find the names of employees who work in the same department as the employee who earns the highest commi
+ssion.)
+
+select ename from emp where deptno=(select deptno from emp where comm=(select max(ifnull(comm,0)) from emp));
++--------+
+| ename  |
++--------+
+| ALLEN  |
+| BLAKE  |
+| JAMES  |
+| MARTIN |
+| TURNER |
+| WARD   |
++--------+
+6 rows in set (0.00 sec)
+
+
+
+7)Show the names of employees whose salary is exactly equal to the minimum salary in the company.
+
+select ename from emp where sal=(select min(sal) from emp) ;
++-------+
+| ename |
++-------+
+| SMITH |
++-------+
+1 row in set (0.00 sec)
+
+
+
+8)Find all employees who have the same manager as 'FORD'.
+
+select ename from emp where mgr=(select mgr from emp where ename='ford') ;
++-------+
+| ename |
++-------+
+| SCOTT |
+| FORD  |
++-------+
+2 rows in set (0.00 sec)
+
+
+
+
+9)Display the employee names who work in the same department as 'SCOTT'.
+
+
+select ename from emp where deptno=(select deptno from emp where ename='scott') ;
++-------+
+| ename |
++-------+
+| ADAMS |
+| FORD  |
+| JONES |
+| SCOTT |
+| SMITH |
++-------+
+5 rows in set (0.00 sec)
+
+
+
+10)Find the names of all employees hired in the same year as 'JAMES'
+
+
+select ename from emp where year(hiredate)=(select year(hiredate) from emp where ename='james') ;
++--------+
+| ename  |
++--------+
+| ALLEN  |
+| WARD   |
+| JONES  |
+| MARTIN |
+| BLAKE  |
+| CLARK  |
+| KING   |
+| TURNER |
+| JAMES  |
+| FORD   |
++--------+
+10 rows in set (0.00 sec)
+
+

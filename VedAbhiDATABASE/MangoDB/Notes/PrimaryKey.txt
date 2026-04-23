@@ -1,0 +1,3 @@
+MongoDB implements the primary key using the '_id' field. Every primary key acts as a 
+different identifier for the document. This field is automatically created by MongoDB when 
+the document is inserted. This can be any type, as long as it is different from the collection.

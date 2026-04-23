@@ -1,0 +1,147 @@
+1 How can you find only the departments that currently have no employees assigned to them?
+
+mysql> select d.dname,count(e.job)
+    -> from dept d
+    -> left join emp e on d.deptno = e.deptno
+    -> group by d.dname
+    -> having count(e.job) = 0;
++------------+--------------+
+| dname      | count(e.job) |
++------------+--------------+
+| OPERATIONS |            0 |
++------------+--------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+2.List Employees Who Are Both Managers and Analysts (Using INTERSECT)
+
+
+mysql> select ename
+    -> from emp
+    -> where empno in (select distinct mgr from emp)
+    -> intersect
+    -> select ename from emp where job='ANALYST';
++-------+
+| ename |
++-------+
+| FORD  |
+| SCOTT |
++-------+
+
+
+
+
+3.Employees Who Work in Same Department as ‘SCOTT’ and ‘KING’(Using INTERSECT)
+mysql> select ename
+    -> from emp
+    -> where deptno = (select deptno from emp where ename = 'SCOTT')
+    -> INTERSECT
+    -> select ename
+    -> from emp
+    -> where deptno = (select deptno from emp where ename = 'KING');
+Empty set (0.00 sec)
+
+
+
+
+4.List Employees in Dept 10 or Having Salary > 3000 (Using UNION)
+
+
+mysql> select ename,sal,deptno from emp where deptno=10
+    -> union
+    -> select ename,sal,deptno from emp where sal>3000;
++--------+---------+--------+
+| ename  | sal     | deptno |
++--------+---------+--------+
+| CLARK  | 2450.00 |     10 |
+| KING   | 5000.00 |     10 |
+| MILLER | 1300.00 |     10 |
++--------+---------+--------+
+3 rows in set (0.00 sec)
+
+
+
+
+5.Find Employees Who Do NOT Belong to Any Department
+
+
+mysql> select ename from emp where deptno is null;
+Empty set (0.00 sec)
+
+
+
+
+6.List Departments with Total Salary Greater Than 2000
+
+
+select dname, sum(sal) from emp natural join dept group by dname having sum(sal)>2000;
++------------+----------+
+| dname      | sum(sal) |
++------------+----------+
+| RESEARCH   | 10875.00 |
+| SALES      |  9400.00 |
+| ACCOUNTING |  8750.00 |
++------------+----------+
+3 rows in set (0.00 sec)
+
+
+
+7.Show Dept with Highest Total Salary
+
+
+select dname, sum(sal) from emp natural join dept group by dname order by sum(sal) desc limit 1;
++----------+----------+
+| dname    | sum(sal) |
++----------+----------+
+| RESEARCH | 10875.00 |
++----------+----------+
+1 row in set (0.00 sec)
+
+
+
+
+
+8.Display Total Commission Paid Department-wise
+
+ select dname,sum(ifnull(comm,0)) from emp natural join dept group by dname order by sum(ifnull(comm,0));
++------------+---------------------+
+| dname      | sum(ifnull(comm,0)) |
++------------+---------------------+
+| ACCOUNTING |                0.00 |
+| RESEARCH   |                0.00 |
+| SALES      |             2200.00 |
++------------+---------------------+
+3 rows in set (0.00 sec)
+
+
+
+
+9.Show Departments Where Average Salary is Greater Than Overall Average
+
+
+SELECT dname, AVG(sal) AS 'Dept By Avg'  FROM emp  NATURAL JOIN dept  GROUP BY dname HAVING AVG(sal) > (SELECT AVG(sal) FROM emp) ORDER BY AVG(sal);
++------------+-------------+
+| dname      | Dept By Avg |
++------------+-------------+
+| RESEARCH   | 2175.000000 |
+| ACCOUNTING | 2916.666667 |
++------------+-------------+
+2 rows in set (0.00 sec) 
+
+
+
+
+
+10.Departments Where At Least One Employee Earns More Than 4000
+
+
+mysql> SELECT dname  FROM emp NATURAL JOIN dept  GROUP BY dname HAVING MAX(sal) > 4000;
++------------+
+| dname      |
++------------+
+| ACCOUNTING |
++------------+
+1 row in set (0.00 sec)

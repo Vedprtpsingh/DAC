@@ -1,0 +1,238 @@
+1)List all employees, ordered by their HIREDATE from newest to oldest.
+ select ename,hiredate from emp order by hiredate asc;
++--------+------------+
+| ename  | hiredate   |
++--------+------------+
+| SMITH  | 1980-12-17 |
+| ALLEN  | 1981-02-20 |
+| WARD   | 1981-02-22 |
+| JONES  | 1981-04-02 |
+| BLAKE  | 1981-05-01 |
+| CLARK  | 1981-07-09 |
+| TURNER | 1981-09-08 |
+| MARTIN | 1981-09-28 |
+| JAMES  | 1981-12-03 |
+| FORD   | 1981-12-03 |
+| KING   | 1981-12-17 |
+| MILLER | 1982-02-23 |
+| SCOTT  | 1982-12-09 |
+| ADAMS  | 1983-01-12 |
++--------+------------+
+14 rows in set (0.00 sec)
+
+
+
+2)List all employees who work in 'DALLAS'.
+ select ename,deptno,loc from emp natural join dept where loc='dallas';
++-------+--------+--------+
+| ename | deptno | loc    |
++-------+--------+--------+
+| SMITH |     20 | DALLAS |
+| JONES |     20 | DALLAS |
+| SCOTT |     20 | DALLAS |
+| ADAMS |     20 | DALLAS |
+| FORD  |     20 | DALLAS |
++-------+--------+--------+
+5 rows in set (0.00 sec)
+
+
+
+
+3)Find all employees who were hired in the year 1981.
+SELECT * FROM EMP WHERE HIREDATE >= STR_TO_DATE ('01/01/1981', '%d/%m/%Y') AND HIREDATE <= STR_TO_DATE ('31/12/1981', '%d/%m/%Y');
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-07-09 | 2450.00 |    NULL |     10 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-12-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+10 rows in set (0.00 sec)
+
+ SELECT * FROM EMP WHERE HIREDATE between STR_TO_DATE ('01/01/1981', '%d/%m/%Y') AND STR_TO_DATE ('31/12/1981', '%d/%m/%Y');
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-07-09 | 2450.00 |    NULL |     10 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-12-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+10 rows in set (0.00 sec)
+SELECT * FROM EMP WHERE HIREDATE between ('1981-01-01') AND ('1981-12-31');
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-07-09 | 2450.00 |    NULL |     10 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-12-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+10 rows in set (0.00 sec)
+
+
+
+
+4)List the DNAME and LOC from the DEPT table, ordered alphabetically by location.
+ select *from dept order by loc asc;
++--------+------------+----------+
+| DEPTNO | DNAME      | LOC      |
++--------+------------+----------+
+|     40 | OPERATIONS | BOSTON   |
+|     30 | SALES      | CHICAGO  |
+|     20 | RESEARCH   | DALLAS   |
+|     10 | ACCOUNTING | NEW YORK |
++--------+------------+----------+
+4 rows in set (0.00 sec)
+
+
+
+
+5)List all employees who do not work in Department 10.
+
+mysql> select ename,deptno from emp where deptno!=10;
++--------+--------+
+| ename  | deptno |
++--------+--------+
+| SMITH  |     20 |
+| ALLEN  |     30 |
+| WARD   |     30 |
+| JONES  |     20 |
+| MARTIN |     30 |
+| BLAKE  |     30 |
+| SCOTT  |     20 |
+| TURNER |     30 |
+| ADAMS  |     20 |
+| JAMES  |     30 |
+| FORD   |     20 |
++--------+--------+
+11 rows in set (0.00 sec)
+
+
+
+
+
+6)Display all employees who were hired after January 1st, 1982.
+select ename,hiredate from emp where hiredate>=('1982-01-01') order by hiredate asc;
++--------+------------+
+| ename  | hiredate   |
++--------+------------+
+| MILLER | 1982-02-23 |
+| SCOTT  | 1982-12-09 |
+| ADAMS  | 1983-01-12 |
++--------+------------+
+
+
+
+
+
+7)Show what each employee’s salary would be if they were given a 15% raise. Display the ENAME, SAL, and the NEW_SAL.
+SELECT ename,
+    ->        sal,
+    ->        ROUND(sal * 1.15, 2) AS new_sal
+    -> FROM emp;
++--------+---------+---------+
+| ename  | sal     | new_sal |
++--------+---------+---------+
+| SMITH  |  800.00 |  920.00 |
+| ALLEN  | 1600.00 | 1840.00 |
+| WARD   | 1250.00 | 1437.50 |
+| JONES  | 2975.00 | 3421.25 |
+| MARTIN | 1250.00 | 1437.50 |
+| BLAKE  | 2850.00 | 3277.50 |
+| CLARK  | 2450.00 | 2817.50 |
+| SCOTT  | 3000.00 | 3450.00 |
+| KING   | 5000.00 | 5750.00 |
+| TURNER | 1500.00 | 1725.00 |
+| ADAMS  | 1100.00 | 1265.00 |
+| JAMES  |  950.00 | 1092.50 |
+| FORD   | 3000.00 | 3450.00 |
+| MILLER | 1300.00 | 1495.00 |
++--------+---------+---------+
+14 rows in set (0.01 sec)
+
+
+
+
+
+8)List all employees, sorted first by their Department Number (ascending) and then by their Salary (descending).
+select ename,deptno,sal from emp order by deptno asc,sal desc;
++--------+--------+---------+
+| ename  | deptno | sal     |
++--------+--------+---------+
+| KING   |     10 | 5000.00 |
+| CLARK  |     10 | 2450.00 |
+| MILLER |     10 | 1300.00 |
+| SCOTT  |     20 | 3000.00 |
+| FORD   |     20 | 3000.00 |
+| JONES  |     20 | 2975.00 |
+| ADAMS  |     20 | 1100.00 |
+| SMITH  |     20 |  800.00 |
+| BLAKE  |     30 | 2850.00 |
+| ALLEN  |     30 | 1600.00 |
+| TURNER |     30 | 1500.00 |
+| WARD   |     30 | 1250.00 |
+| MARTIN |     30 | 1250.00 |
+| JAMES  |     30 |  950.00 |
+
+
+
+
+9)List all employees whose total monthly income (Salary + Commission) is greater than 1500.
+ select ename,sal,comm,sal+ifnull(comm,0) as income from emp where (sal+ifnull(comm,0)) >1500;
++--------+---------+---------+---------+
+| ename  | sal     | comm    | income  |
++--------+---------+---------+---------+
+| ALLEN  | 1600.00 |  300.00 | 1900.00 |
+| WARD   | 1250.00 |  500.00 | 1750.00 |
+| JONES  | 2975.00 |    NULL | 2975.00 |
+| MARTIN | 1250.00 | 1400.00 | 2650.00 |
+| BLAKE  | 2850.00 |    NULL | 2850.00 |
+| CLARK  | 2450.00 |    NULL | 2450.00 |
+| SCOTT  | 3000.00 |    NULL | 3000.00 |
+| KING   | 5000.00 |    NULL | 5000.00 |
+| FORD   | 3000.00 |    NULL | 3000.00 |
++--------+---------+---------+---------+
+9 rows in set (0.00 sec)
+
+
+
+
+
+10)Find all 'SALESMAN' who earn a salary that is not between 1200 and 1500.
+select ename,job,sal from emp where  not sal between 1200 and 1500 ;
++-------+-----------+---------+
+| ename | job       | sal     |
++-------+-----------+---------+
+| SMITH | CLERK     |  800.00 |
+| ALLEN | SALESMAN  | 1600.00 |
+| JONES | MANAGER   | 2975.00 |
+| BLAKE | MANAGER   | 2850.00 |
+| CLARK | MANAGER   | 2450.00 |
+| SCOTT | ANALYST   | 3000.00 |
+| KING  | PRESIDENT | 5000.00 |
+| ADAMS | CLERK     | 1100.00 |
+| JAMES | CLERK     |  950.00 |
+| FORD  | ANALYST   | 3000.00 |
++-------+-----------+---------+
+10 rows in set (0.00 sec)
+
