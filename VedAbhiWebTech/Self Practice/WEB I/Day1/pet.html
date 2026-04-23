@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Form</title>
+
+</head>
+
+<body>
+
+<h2>Pet Registration Form</h2>
+<hr>
+
+<form action="" method="POST">
+
+    <div class="form-group">
+        <label for="pet-name">Pet Name:</label>
+        <input type="text" id="pet-name" name="pet_name" placeholder="Tommy" required>
+    </div>
+
+    <div class="form-group">
+        <label for="pet-age">Pet Age:</label>
+        <input type="number" id="pet-age" name="pet_age" required>
+    </div>
+
+    <div class="form-group">
+        <label for="pet-breed">Pet Breed:</label>
+        <input type="text" id="pet-breed" name="pet_breed" required>
+    </div>
+
+    <div class="form-group">
+        <label for="owner-name">Owner Name:</label>
+        <input type="text" id="owner-name" name="owner_name" required>
+    </div>
+
+    <div class="form-group">
+        <label for="appo-date">Appointment Date:</label>
+        <input type="date" id="appo-date" name="appo_date" required>
+    </div>
+
+    <div class="form-group">
+        <label for="owner-number">Owner Contact Number:</label>
+        <input type="text" id="owner-number" name="owner_number" required>
+    </div>
+    <button type="submit" onclick="onSubmit(this.form);return false;">Submit</button>
+
+</form>
+<h3>Pet Details</h3>
+<table id="petTable">
+    <thead>
+        <tr>
+            <th>Pet Name</th>
+            <th>Pet Age</th>
+            <th>Pet Breed</th>
+            <th>Owner Name</th>
+            <th>Appointment Date</th>
+            <th>Owner Contact Number</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody">
+        </tbody>
+</table>
+
+</body>
+<script>
+
+    function checkString(s){
+        return s != null && s != '';
+    }
+
+    function checkNumber(n){
+        return !isNaN(n) && n>0;
+    }
+
+    const validateForm = (f) => {
+        if(!checkString(f.pet_name.value)) return false;
+        if(!checkNumber(f.pet_age.value)) return false;
+        if(!checkString(f.pet_breed.value)) return false;
+        if(!checkString(f.owner_name.value)) return false;
+        if(!checkString(f.appo_date.value)) return false;
+
+        if(!checkString(f.owner_number.value)) return false;
+        return true;
+    }
+
+    const onSubmit = (f) => {
+        if(validateForm(f)){            
+            alert("Submitted..");
+        }else{
+            alert("Check entered data..");
+        }
+        const data = {      
+            'petName': f.pet_name.value,
+            'petAge': f.pet_age.value,
+            'petBreed': f.pet_breed.value,
+            'ownerName': f.owner_name.value,
+            'appointmentDate': f.appo_date.value,
+            'ownerNumber': f.owner_number.value
+        } 
+        saveData(data);
+        f.reset();
+        displayData();
+    }
+
+    const saveData = (data) => {
+        let arr = JSON.parse(localStorage.getItem('dataArray')) || [];
+        arr.push(data);
+        localStorage.setItem('dataArray', JSON.stringify(arr));
+    }
+
+    const displayData = () => {
+        const tableBody = document.getElementById('tableBody');
+        tableBody.innerHTML = "";
+        
+        const rawDataArr = localStorage.getItem('dataArray');
+        
+        if (rawDataArr) {
+            const dataArr = JSON.parse(rawDataArr);
+            dataArr.forEach(data => {
+                let row = tableBody.insertRow();
+                row.insertCell(0).innerText = data.petName;
+                row.insertCell(1).innerText = data.petAge;
+                row.insertCell(2).innerText = data.petBreed;
+                row.insertCell(3).innerText = data.ownerName;
+                row.insertCell(4).innerText = data.appointmentDate;
+                row.insertCell(5).innerText = data.ownerNumber;
+            });
+        }
+    };
+
+    window.onload = displayData();
+</script>
+</html>

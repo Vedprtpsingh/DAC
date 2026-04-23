@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Burger Menu</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    /* Navbar */
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: black;
+        padding: 10px 20px;
+        color: white;
+    }
+
+    /* Menu list */
+    .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+    }
+
+    .nav-links li a {
+        text-decoration: none;
+        color: white;
+    }
+
+    /* Hamburger */
+    .burger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+    }
+
+    .burger div {
+        width: 25px;
+        height: 3px;
+        background-color: white;
+        margin: 4px;
+        transition: 0.3s;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+        .nav-links {
+            position: absolute;
+            right: 0;
+            top: 50px;
+            background-color: black;
+            flex-direction: column;
+            width: 100%;
+            display: none;
+            text-align: center;
+        }
+
+        .nav-links.active {
+            display: flex;
+        }
+
+        .burger {
+            display: flex;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <h3>MySite</h3>
+
+    <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Courses</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+
+    <div class="burger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</nav>
+
+<script>
+function toggleMenu() {
+    document.querySelector('.nav-links').classList.toggle('active');
+}
+</script>
+
+</body>
+</html>

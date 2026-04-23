@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Two Numbers</title>
+</head>
+<body>
+  <form onsubmit="return false;">
+    Enter first number: <input type="text" id="a" name="aaa"><br><br>
+    Enter second number: <input type="text" id="b" name="bbb"><br><br>
+    <button onclick="add(this.form)">A + B </button>
+    <button onclick="sub(this.form)">A - B</button>
+    <button onclick="mul(this.form)">A * B</button>
+    <button onclick="myFn(this.form)">A / B</button>
+  </form>
+  <p id="result"></p>
+  <script>
+    function add(f) {
+      let sum = parseFloat(document.getElementById("a").value) + parseFloat(document.getElementById("b").value);
+      document.getElementById("result").innerText = "Result: " + sum;
+    }
+    function sub(f){
+        let sub = parseFloat(f.aaa.value) - parseFloat(f.bbb.value);
+        document.getElementById("result").innerText="Result: " + sub;
+    }
+    function mul(f){
+        const aa=parseFloat(document.getElementById("a").value);
+        const bb=parseFloat(document.getElementById("b").value);
+        let mul=aa*bb;
+        document.getElementById("result").innerText="Result : "+mul
+    }
+        function div(f){
+        const aa=parseFloat(document.getElementById("a").value);
+        const bb=parseFloat(document.getElementById("b").value);
+        let mul=aa/bb;
+        document.getElementById("result").innerText="Result : "+mul
+    }
+
+    const myFn = (f) => {
+        let sub = parseFloat(f.aaa.value) / parseFloat(f.bbb.value);
+        document.getElementById("result").innerText="Result: " + sub;
+      }
+  </script>
+</body>
+</html>

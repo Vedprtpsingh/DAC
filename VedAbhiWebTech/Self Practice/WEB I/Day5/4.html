@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <script type="text/javascript">
+      function compute(f) {
+        if (confirm("Are you sure?"))
+          document.getElementById("result").innerText = eval(f.expr.value);
+        else
+          alert("Please come back again.");
+      }
+
+
+    </script>
+  </head>
+  <body>
+    <strong>Example:</strong>
+    <form>
+      Enter an expression:
+      <input type="text" name="expr" size="10" value="2+2" /><br/>
+      <input type="button" value="Calculate" onClick="compute(this.form)" /><br/>
+      Result: <p id="result"></p>
+    </form>
+  </body>
+</html>
