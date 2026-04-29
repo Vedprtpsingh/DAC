@@ -18,7 +18,6 @@ function App() {
   // ADD / UPDATE
   const addStudent = async ()=>{
 
-    // VALIDATION
     if(!form.name || form.name.trim().length < 3){
       alert("Name must be at least 3 characters");
       return;
@@ -49,34 +48,44 @@ function App() {
       return;
     }
 
-    // UPDATE
-    if(editId){
-      await axios.put(`http://localhost:3000/update/${editId}`, form);
-      setEditId(null);
-    }
-    // ADD
-    else{
-      await axios.post("http://localhost:3000/add", form);
-    }
+    try {
+      if(editId){
+        await axios.put(`http://localhost:3000/update/${editId}`, form);
+        setEditId(null);
+      } else {
+        await axios.post("http://localhost:3000/add", form);
+      }
 
-    getStudents();
+      getStudents();
 
-    // clear form
-    setForm({
-      name:"", email:"", course:"", address:"", mobile:"", dob:""
-    });
+      setForm({
+        name:"", email:"", course:"", address:"", mobile:"", dob:""
+      });
+
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong");
+    }
   };
 
   // GET
   const getStudents = async ()=>{
-    const res = await axios.get("http://localhost:3000/all");
-    setStudents(res.data);
+    try {
+      const res = await axios.get("http://localhost:3000/all");
+      setStudents(res.data);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   // DELETE
   const deleteStudent = async(id)=>{
-    await axios.delete(`http://localhost:3000/delete/${id}`);
-    getStudents();
+    try {
+      await axios.delete(`http://localhost:3000/delete/${id}`);
+      getStudents();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   // EDIT
@@ -94,7 +103,6 @@ function App() {
 
       <h3>Add / Update Student</h3>
 
-      {/* FORM */}
       <input className="form-control mb-2" name="name" placeholder="Name" value={form.name} onChange={handleChange}/>
       <input className="form-control mb-2" name="email" placeholder="Email" value={form.email} onChange={handleChange}/>
       <input className="form-control mb-2" name="course" placeholder="Course" value={form.course} onChange={handleChange}/>
@@ -106,7 +114,6 @@ function App() {
         {editId ? "Update" : "Add"}
       </button>
 
-      {/* TABLE */}
       <h3 className="mt-4">Students</h3>
 
       <table className="table table-bordered">
