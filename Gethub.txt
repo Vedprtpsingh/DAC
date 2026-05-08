@@ -6,7 +6,6 @@ git remote add origin https://github.com/Vedprtpsingh/DAC.git
 git push -u origin main
 
 
-
 git pull origin main  # Fetch and merge the latest changes from GitHub
 git add .
 git commit -m "Updated project files"
