@@ -1,0 +1,31 @@
+# Matrix Green - Eclipse Console Color Preferences
+# Place this file in: <workspace>/.metadata/.plugins/org.eclipse.core.runtime/.settings/
+# Filename: org.eclipse.debug.ui.prefs
+
+eclipse.preferences.version=1
+
+# ── Console background ────────────────────────────────────────────────────────
+# Pure black background for all console output
+org.eclipse.debug.ui.consoleBackground=0,0,0
+
+# ── Standard output stream  → Bright Green ───────────────────────────────────
+org.eclipse.debug.ui.outColor=0,255,0
+
+# ── Standard input stream   → Neon Green ─────────────────────────────────────
+org.eclipse.debug.ui.inColor=57,255,20
+
+# ── Standard error stream   → Red ────────────────────────────────────────────
+org.eclipse.debug.ui.errorColor=255,68,68
+
+# ── Console font (monospaced, slightly larger for readability) ────────────────
+# Uncomment and adjust the size as needed (default "10" = 10pt)
+# org.eclipse.debug.ui.consoleFont=1|Courier New|10|0|0;
+
+# ── Auto-scroll & word-wrap (optional quality-of-life settings) ──────────────
+org.eclipse.debug.ui.console.autoScroll=true
+org.eclipse.debug.ui.console.wordWrap=false
+
+# ── Console buffer size limit (bytes) ────────────────────────────────────────
+org.eclipse.debug.ui.console.limitOutput=true
+org.eclipse.debug.ui.console.highWaterMark=500000
+org.eclipse.debug.ui.console.lowWaterMark=400000

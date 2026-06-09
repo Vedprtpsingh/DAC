@@ -1,0 +1,150 @@
+# Matrix Green - JDT Java Editor Color Preferences
+# Place this file in: <workspace>/.metadata/.plugins/org.eclipse.core.runtime/.settings/
+# Filename: org.eclipse.jdt.ui.prefs
+
+eclipse.preferences.version=1
+
+# ── Java syntax highlighting ──────────────────────────────────────────────────
+
+# Keywords  → Neon Green
+java_keyword=39,255,20
+java_keyword_bold=true
+java_keyword_italic=false
+java_keyword_strikethrough=false
+java_keyword_underline=false
+
+# Strings  → Lawn Green
+java_string=124,252,0
+java_string_bold=false
+java_string_italic=false
+java_string_strikethrough=false
+java_string_underline=false
+
+# Single-line comments  → Forest Green
+java_single_line_comment=34,139,34
+java_single_line_comment_bold=false
+java_single_line_comment_italic=true
+java_single_line_comment_strikethrough=false
+java_single_line_comment_underline=false
+
+# Multi-line comments  → Forest Green
+java_multi_line_comment=34,139,34
+java_multi_line_comment_bold=false
+java_multi_line_comment_italic=true
+java_multi_line_comment_strikethrough=false
+java_multi_line_comment_underline=false
+
+# Javadoc comments  → Medium Green (slightly lighter)
+java_doc_comment=0,170,0
+java_doc_comment_bold=false
+java_doc_comment_italic=true
+java_doc_comment_strikethrough=false
+java_doc_comment_underline=false
+
+# Javadoc tags (@param, @return …)
+java_doc_tag=57,255,20
+java_doc_tag_bold=true
+java_doc_tag_italic=false
+java_doc_tag_strikethrough=false
+java_doc_tag_underline=false
+
+# Javadoc keywords
+java_doc_keyword=57,255,20
+java_doc_keyword_bold=true
+
+# Default / identifiers  → Bright Green
+java_default=0,255,0
+java_default_bold=false
+java_default_italic=false
+java_default_strikethrough=false
+java_default_underline=false
+
+# Class names  → Lime Green
+java_type=50,205,50
+java_type_bold=true
+java_type_italic=false
+
+# Method declarations  → Green-Yellow
+java_method_declaration=173,255,47
+java_method_declaration_bold=false
+java_method_declaration_italic=false
+
+# Annotations (@Override etc.)
+java_annotation=0,170,0
+java_annotation_bold=false
+java_annotation_italic=false
+
+# Number literals
+java_number=124,252,0
+java_number_bold=false
+
+# Operators & brackets
+java_bracket=0,255,0
+java_operator=173,255,47
+
+# ── Semantic highlighting ─────────────────────────────────────────────────────
+semanticHighlighting.class.color=50,205,50
+semanticHighlighting.class.bold=true
+semanticHighlighting.class.enabled=true
+
+semanticHighlighting.interface.color=173,255,47
+semanticHighlighting.interface.bold=false
+semanticHighlighting.interface.enabled=true
+
+semanticHighlighting.enum.color=173,255,47
+semanticHighlighting.enum.bold=false
+semanticHighlighting.enum.enabled=true
+
+semanticHighlighting.annotation.color=0,170,0
+semanticHighlighting.annotation.enabled=true
+
+semanticHighlighting.field.color=0,255,0
+semanticHighlighting.field.italic=true
+semanticHighlighting.field.enabled=true
+
+semanticHighlighting.staticField.color=124,252,0
+semanticHighlighting.staticField.italic=true
+semanticHighlighting.staticField.bold=false
+semanticHighlighting.staticField.enabled=true
+
+semanticHighlighting.methodDeclaration.color=173,255,47
+semanticHighlighting.methodDeclaration.bold=false
+semanticHighlighting.methodDeclaration.enabled=true
+
+semanticHighlighting.staticMethodInvocation.color=173,255,47
+semanticHighlighting.staticMethodInvocation.italic=true
+semanticHighlighting.staticMethodInvocation.enabled=true
+
+semanticHighlighting.localVariable.color=0,255,0
+semanticHighlighting.localVariable.enabled=true
+
+semanticHighlighting.localVariableDeclaration.color=57,255,20
+semanticHighlighting.localVariableDeclaration.enabled=true
+
+semanticHighlighting.parameterVariable.color=0,255,0
+semanticHighlighting.parameterVariable.enabled=true
+
+semanticHighlighting.typeParameter.color=173,255,47
+semanticHighlighting.typeParameter.enabled=true
+
+semanticHighlighting.deprecatedMember.color=0,170,0
+semanticHighlighting.deprecatedMember.strikethrough=true
+semanticHighlighting.deprecatedMember.enabled=true
+
+semanticHighlighting.number.color=124,252,0
+semanticHighlighting.number.enabled=true
+
+# ── Error / warning squiggles ─────────────────────────────────────────────────
+spellingError=255,68,68
+semanticHighlighting.problem.color=255,68,68
+semanticHighlighting.warning.color=255,255,0
+
+# ── Linked mode (refactoring) ─────────────────────────────────────────────────
+linkedModeColor=57,255,20
+occurrenceHighlightColor=0,68,0
+
+# ── Background & cursor (mirror from editor prefs for JDT) ───────────────────
+AbstractTextEditor.Color.Background=0,0,0
+AbstractTextEditor.Color.Background.SystemDefault=false
+AbstractTextEditor.Color.Foreground=0,255,0
+AbstractTextEditor.Color.Foreground.SystemDefault=false

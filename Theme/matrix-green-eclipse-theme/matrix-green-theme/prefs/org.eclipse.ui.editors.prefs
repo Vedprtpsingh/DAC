@@ -1,0 +1,40 @@
+# Matrix Green - Eclipse Editor Color Preferences
+# Place this file in: <workspace>/.metadata/.plugins/org.eclipse.core.runtime/.settings/
+# Filename: org.eclipse.ui.editors.prefs
+
+eclipse.preferences.version=1
+
+# ── Background & foreground ───────────────────────────────────────────────────
+AbstractTextEditor.Color.Background=0,0,0
+AbstractTextEditor.Color.Background.SystemDefault=false
+AbstractTextEditor.Color.Foreground=0,255,0
+AbstractTextEditor.Color.Foreground.SystemDefault=false
+
+# ── Selection ─────────────────────────────────────────────────────────────────
+AbstractTextEditor.Color.SelectionBackground=0,51,0
+AbstractTextEditor.Color.SelectionBackground.SystemDefault=false
+AbstractTextEditor.Color.SelectionForeground=57,255,20
+AbstractTextEditor.Color.SelectionForeground.SystemDefault=false
+
+# ── Current line highlight ────────────────────────────────────────────────────
+currentLineColor=0,26,0
+lineHighlightColor=0,26,0
+isLineHighlightColorDefault=false
+
+# ── Find / occurrence highlights ──────────────────────────────────────────────
+occurrenceHighlightColor=0,68,0
+writeOccurrenceHighlightColor=0,100,0
+
+# ── Print margin ──────────────────────────────────────────────────────────────
+printMarginColor=0,40,0
+printMargin=false
+
+# ── Matching brackets ─────────────────────────────────────────────────────────
+matchingBracketsColor=57,255,20
+matchingBrackets=true
+
+# ── Annotation ────────────────────────────────────────────────────────────────
+spellingErrorColor=255,68,68
+errorAnnotationColor=255,68,68
+warningAnnotationColor=255,255,0
+infoAnnotationColor=0,170,0

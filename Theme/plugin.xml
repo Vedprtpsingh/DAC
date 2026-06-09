@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+  Matrix Green Eclipse Theme — plugin.xml
+  Registers the E4 CSS theme with the Eclipse platform.
+  
+  Plugin-ID: com.matrixgreen.theme
+  Version:   1.0.0
+-->
+<plugin>
+
+  <!-- =========================================================
+       1. E4 CSS THEME REGISTRATION
+       ========================================================= -->
+  <extension
+      point="org.eclipse.e4.ui.css.swt.theme">
+    <theme
+        id="com.matrixgreen.theme.css"
+        label="Matrix Green"
+        basestylesheeturi="css/matrix-green.css"
+        os="win32,linux,macosx">
+    </theme>
+  </extension>
+
+  <!-- =========================================================
+       2. THEME ENGINE DEFAULT
+       Sets Matrix Green as the theme used when the plugin is
+       first installed (users can still switch in Preferences).
+       ========================================================= -->
+  <extension
+      point="org.eclipse.core.runtime.preferences">
+    <initializer
+        class="com.matrixgreen.theme.MatrixGreenPreferenceInitializer">
+    </initializer>
+  </extension>
+
+  <!-- =========================================================
+       3. EDITOR / SYNTAX COLOUR SCHEMES
+       Registers the colour scheme visible in
+       Window > Preferences > General > Appearance > Color Theme
+       (requires Eclipse Color Theme plugin, or use prefs files).
+       ========================================================= -->
+  <extension
+      point="org.eclipse.ui.themes">
+
+    <!-- Workbench colour override -->
+    <colorDefinition
+        id="com.matrixgreen.theme.editorBackground"
+        label="Editor Background"
+        value="#000000"
+        isEditable="false">
+    </colorDefinition>
+
+    <colorDefinition
+        id="com.matrixgreen.theme.editorForeground"
+        label="Editor Foreground"
+        value="#00FF00"
+        isEditable="false">
+    </colorDefinition>
+
+    <colorDefinition
+        id="com.matrixgreen.theme.viewBackground"
+        label="View Background"
+        value="#000000"
+        isEditable="false">
+    </colorDefinition>
+
+    <colorDefinition
+        id="com.matrixgreen.theme.selectedTabBackground"
+        label="Selected Tab Background"
+        value="#006400"
+        isEditable="false">
+    </colorDefinition>
+
+    <colorDefinition
+        id="com.matrixgreen.theme.errorText"
+        label="Error Text"
+        value="#FF4444"
+        isEditable="false">
+    </colorDefinition>
+
+    <colorDefinition
+        id="com.matrixgreen.theme.warningText"
+        label="Warning Text"
+        value="#FFFF00"
+        isEditable="false">
+    </colorDefinition>
+
+    <!-- Theme declaration referencing our CSS file -->
+    <theme
+        id="com.matrixgreen.theme"
+        label="Matrix Green">
+      <colorOverride
+          id="org.eclipse.ui.workbench.ACTIVE_TAB_BG_START"
+          colorId="com.matrixgreen.theme.selectedTabBackground">
+      </colorOverride>
+      <colorOverride
+          id="org.eclipse.ui.workbench.ACTIVE_TAB_BG_END"
+          colorId="com.matrixgreen.theme.selectedTabBackground">
+      </colorOverride>
+      <colorOverride
+          id="org.eclipse.ui.workbench.ACTIVE_TAB_TEXT_COLOR"
+          colorId="com.matrixgreen.theme.editorForeground">
+      </colorOverride>
+    </theme>
+
+  </extension>
+
+  <!-- =========================================================
+       4. CONSOLE COLOUR OVERRIDES
+       Forces all Console output streams to Matrix Green colours.
+       ========================================================= -->
+  <extension
+      point="org.eclipse.core.runtime.preferences">
+    <initializer
+        class="com.matrixgreen.theme.ConsoleColorInitializer">
+    </initializer>
+  </extension>
+
+</plugin>

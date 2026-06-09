@@ -1,0 +1,440 @@
+/*******************************************************************************
+ * Matrix Green - Eclipse E4 CSS Theme
+ * A hacker-style Matrix terminal theme with high contrast green-on-black.
+ * Compatible with Eclipse 2024+ (E4 platform)
+ *
+ * Author:  Matrix Green Theme Project
+ * Version: 1.0.0
+ ******************************************************************************/
+
+/* =============================================================================
+   GLOBAL / SHELL
+   ============================================================================= */
+
+.MPartStack,
+.MTrimmedWindow,
+MWindow {
+	background-color: #000000;
+	color: #00FF00;
+}
+
+/* Top-level shell & trim bars */
+MTrimBar {
+	background-color: #000000;
+	handle-image: none;
+}
+
+MTrimBar#org-eclipse-ui-main-toolbar {
+	background-color: #000000;
+	border-bottom: 1px solid #003300;
+}
+
+/* =============================================================================
+   TOOLBAR
+   ============================================================================= */
+
+CTabFolder.MToolControl,
+ToolBar,
+ToolItem,
+CoolBar {
+	background-color: #000000;
+	color: #00FF00;
+}
+
+ToolItem:hover {
+	background-color: #003300;
+	color: #39FF14;
+}
+
+ToolItem:selected,
+ToolItem:pressed {
+	background-color: #006400;
+	color: #00FF00;
+}
+
+/* Main toolbar separator */
+ToolItem.separator {
+	background-color: #002200;
+}
+
+/* =============================================================================
+   MENU BAR
+   ============================================================================= */
+
+Menu,
+MenuItem {
+	background-color: #000000;
+	color: #00FF00;
+}
+
+MenuItem:hover,
+MenuItem:selected {
+	background-color: #003300;
+	color: #39FF14;
+}
+
+MenuItem.separator {
+	background-color: #002200;
+}
+
+/* =============================================================================
+   PART STACKS & TABS
+   ============================================================================= */
+
+/* Tab container */
+.MPartStack {
+	background-color: #000000;
+	border: 1px solid #003300;
+	font-size: 9px;
+}
+
+/* Unselected tabs */
+CTabItem {
+	background-color: #000000;
+	color: #00AA00;
+	border: 1px solid #002200;
+	padding: 2px 8px;
+}
+
+CTabItem:hover {
+	background-color: #001A00;
+	color: #00FF00;
+	border-color: #004400;
+}
+
+/* Selected / active tab */
+CTabItem.selected,
+CTabItem:selected {
+	background-color: #006400;
+	color: #00FF00;
+	border-color: #00AA00;
+	font-weight: bold;
+}
+
+/* Active part stack border */
+.MPartStack.active {
+	border: 1px solid #00AA00;
+}
+
+/* Tab folder toolbar (close/maximize buttons) */
+CTabFolder {
+	background-color: #000000;
+	color: #00FF00;
+	swt-shadow-visible: false;
+	swt-unselected-tabs-color: #000000 100% 100% 99% #000000;
+	swt-outer-keyline-color: #002200;
+	swt-inner-keyline-color: #002200;
+	swt-tab-renderer: url('bundleclass://org.eclipse.e4.ui.workbench.renderers.swt/org.eclipse.e4.ui.workbench.renderers.swt.CTabRendering');
+}
+
+CTabFolder.active {
+	swt-outer-keyline-color: #00AA00;
+}
+
+/* =============================================================================
+   EDITORS
+   ============================================================================= */
+
+/* Main editor area */
+.EditorStack,
+.EditorStack .MPartStack {
+	background-color: #000000;
+}
+
+/* =============================================================================
+   VIEWS (Package Explorer, Outline, etc.)
+   ============================================================================= */
+
+/* All view/pane backgrounds */
+.MPart,
+.MPlaceholder {
+	background-color: #000000;
+	color: #00FF00;
+}
+
+/* Tree / table widgets inside views */
+Tree,
+Table,
+List {
+	background-color: #000000;
+	color: #00FF00;
+}
+
+TreeItem,
+TableItem,
+ListItem {
+	background-color: #000000;
+	color: #00FF00;
+}
+
+TreeItem:selected,
+TableItem:selected,
+ListItem:selected {
+	background-color: #003300;
+	color: #39FF14;
+}
+
+TreeItem:hover,
+TableItem:hover {
+	background-color: #001A00;
+	color: #00FF00;
+}
+
+/* Column headers in tables */
+TableColumn {
+	background-color: #001A00;
+	color: #00AA00;
+	border-bottom: 1px solid #003300;
+}
+
+/* =============================================================================
+   PACKAGE EXPLORER
+   ============================================================================= */
+
+#org-eclipse-jdt-ui-PackageExplorer,
+#org-eclipse-ui-navigator-ProjectExplorer {
+	background-color: #000000;
+	color: #00FF00;
+}
+
+/* =============================================================================
+   SCROLLBARS
+   ============================================================================= */
+
+ScrollBar,
+Scrollbar {
+	background-color: #001A00;
+	color: #00AA00;
+}
+
+ScrollBar.thumb,
+Scrollbar.thumb {
+	background-color: #004400;
+}
+
+ScrollBar.thumb:hover,
+Scrollbar.thumb:hover {
+	background-color: #006400;
+}
+
+/* =============================================================================
+   STATUS BAR
+   ============================================================================= */
+
+#org-eclipse-ui-StatusLine,
+.MTrimBar#statusbar {
+	background-color: #000000;
+	color: #00AA00;
+	border-top: 1px solid #003300;
+}
+
+Label#org-eclipse-ui-StatusLine {
+	color: #00AA00;
+}
+
+/* =============================================================================
+   PROGRESS BAR
+   ============================================================================= */
+
+ProgressBar {
+	background-color: #001A00;
+	color: #00FF00;
+}
+
+/* =============================================================================
+   BUTTONS & CONTROLS
+   ============================================================================= */
+
+Button {
+	background-color: #001A00;
+	color: #00FF00;
+	border: 1px solid #006400;
+}
+
+Button:hover {
+	background-color: #003300;
+	color: #39FF14;
+	border-color: #00AA00;
+}
+
+Button:selected,
+Button:pressed {
+	background-color: #006400;
+	color: #00FF00;
+}
+
+/* =============================================================================
+   TEXT INPUTS & COMBOS
+   ============================================================================= */
+
+Text,
+Combo,
+StyledText {
+	background-color: #000000;
+	color: #00FF00;
+	border: 1px solid #003300;
+}
+
+Text:focused,
+Combo:focused,
+StyledText:focused {
+	border-color: #00AA00;
+}
+
+/* =============================================================================
+   DIALOGS
+   ============================================================================= */
+
+Shell.dialog,
+Shell {
+	background-color: #000000;
+	color: #00FF00;
+}
+
+/* Quick Access / search popup */
+#org-eclipse-ui-QuickAccess {
+	background-color: #000000;
+	color: #00FF00;
+	border: 1px solid #00AA00;
+}
+
+/* =============================================================================
+   SPLASH & ABOUT
+   ============================================================================= */
+
+#org-eclipse-ui-ide-UpgradeWorkspaceDialog,
+.eclipse-splash-progressBar {
+	background-color: #006400;
+	color: #00FF00;
+}
+
+/* =============================================================================
+   FORMS (PDE / plugin editor style pages)
+   ============================================================================= */
+
+Form,
+FormText,
+Section,
+ExpandableComposite {
+	background-color: #000000;
+	color: #00FF00;
+}
+
+Section.title,
+ExpandableComposite.title {
+	color: #39FF14;
+	font-weight: bold;
+}
+
+Hyperlink,
+ImageHyperlink {
+	color: #7CFC00;
+}
+
+Hyperlink:hover,
+ImageHyperlink:hover {
+	color: #39FF14;
+}
+
+/* =============================================================================
+   PERSPECTIVES SWITCHER
+   ============================================================================= */
+
+MPerspectiveStack {
+	background-color: #000000;
+}
+
+MPerspective {
+	background-color: #000000;
+	color: #00AA00;
+}
+
+MPerspective.selected {
+	background-color: #006400;
+	color: #00FF00;
+}
+
+/* =============================================================================
+   FAST VIEW / MINIMISED STACKS
+   ============================================================================= */
+
+.TrimStack {
+	background-color: #000000;
+	color: #00AA00;
+}
+
+/* =============================================================================
+   OUTLINE VIEW
+   ============================================================================= */
+
+#org-eclipse-ui-views-contentOutline {
+	background-color: #000000;
+	color: #00FF00;
+}
+
+/* =============================================================================
+   PROBLEMS / MARKERS VIEW
+   ============================================================================= */
+
+#org-eclipse-ui-views-ProblemView,
+#org-eclipse-ui-views-TaskList {
+	background-color: #000000;
+	color: #00FF00;
+}
+
+/* =============================================================================
+   HOVER / TOOLTIP POPUPS
+   ============================================================================= */
+
+Shell.tooltip,
+.tooltip {
+	background-color: #001A00;
+	color: #00FF00;
+	border: 1px solid #00AA00;
+}
+
+/* =============================================================================
+   SPLIT SASH
+   ============================================================================= */
+
+Sash {
+	background-color: #002200;
+}
+
+Sash:hover {
+	background-color: #006400;
+}
+
+/* =============================================================================
+   BREADCRUMB
+   ============================================================================= */
+
+BreadcrumbItem {
+	background-color: #000000;
+	color: #00AA00;
+}
+
+BreadcrumbItem:selected,
+BreadcrumbItem:hover {
+	background-color: #003300;
+	color: #00FF00;
+}
+
+/* =============================================================================
+   E4 PART / CONTRIBUTION ITEMS
+   ============================================================================= */
+
+MPart {
+	background-color: #000000;
+	color: #00FF00;
+}
+
+/* =============================================================================
+   ANNOTATIONS / RULER
+   ============================================================================= */
+
+/* Line ruler / gutter */
+.rulerColumn {
+	background-color: #000000;
+	color: #00AA00;
+}
