@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#121213"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="RepVault">
+<title>RepVault</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Newsreader:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#121213;--card:#1a1a1c;--line:#2a2a2d;--tx:#e8e6e1;--mu:#8c8a85;--ac:#c8a96a;--bad:#c96a5e;--r:10px}
+*{box-sizing:border-box;margin:0}html,body{background:var(--bg);color:var(--tx);font:15px/1.5 Manrope,system-ui,sans-serif;max-width:100%;overflow-x:hidden}
+h1,h3,.big{font-family:Newsreader,Georgia,serif;font-weight:500}h1{font-size:28px}h3{font-size:18px}
+.muted,small{color:var(--mu)}
+#nav{position:fixed;z-index:5;bottom:0;left:0;right:0;display:flex;background:#161617;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+#nav .brand{display:none}#nav button{flex:1;background:none;border:0;color:var(--mu);padding:14px 2px;font:inherit;font-size:11px;cursor:pointer}
+#nav button.on{color:var(--ac);box-shadow:inset 0 2px var(--ac)}
+main{padding:20px 16px calc(90px + env(safe-area-inset-bottom));max-width:980px;margin:auto}
+header{margin-bottom:18px}header p{color:var(--mu)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-bottom:14px}
+.card,.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.25);margin-bottom:12px}
+.cards .card,.stats .stat{margin:0}.stat b{display:block;font:500 24px Newsreader,serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}.g{margin-top:12px;gap:8px}.g .btn{flex:1}
+.big{font-size:44px;line-height:1.1;margin:6px 0}.bar{height:4px;background:var(--line);border-radius:2px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ac)}
+.btn{background:transparent;color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:11px 14px;font:inherit;cursor:pointer;min-height:44px}
+.btn:hover{border-color:var(--mu)}.btn.pri{background:var(--ac);border-color:var(--ac);color:#17140d;font-weight:700}.btn.bad{color:var(--bad)}.btn:disabled{opacity:.5}
+input,select{width:100%;background:#101011;color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:12px;font:inherit;min-height:44px}
+input:focus,select:focus,.btn:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
+input.num{font-size:38px;text-align:center;padding:16px;font-family:Newsreader,serif}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:12px}.chip{white-space:nowrap;border-radius:20px;min-height:38px;padding:8px 16px}.chip.on{border-color:var(--ac);color:var(--ac)}
+table{width:100%;border-collapse:collapse}td,th{padding:10px 4px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--mu);font-weight:500}td:last-child,th:last-child{text-align:right}
+.ctl{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}.ch{height:240px;position:relative}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:8px}.cal i{display:block}.day{background:none;border:1px solid transparent;border-radius:8px;color:var(--tx);min-height:46px;font:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.day small{font-size:10px;color:var(--ac)}.day.has{background:#201f1c}.day.on{border-color:var(--ac)}
+.empty{padding:24px;text-align:center;color:var(--mu);border:1px dashed var(--line);border-radius:var(--r);grid-column:1/-1}.empty .btn{margin-top:10px}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;z-index:9;background:#232326;border:1px solid var(--line);padding:10px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90%}
+#toast.show{opacity:1}#toast.err{border-color:var(--bad)}#load{height:2px;background:var(--ac);position:fixed;top:0;left:0;width:0;transition:width .4s;z-index:9}
+@media(min-width:900px){#nav{top:0;bottom:auto;width:210px;flex-direction:column;border-top:0;border-right:1px solid var(--line);padding:24px 12px}
+#nav .brand{display:block;font:500 24px Newsreader,serif;color:var(--ac);padding:0 12px 24px}#nav button{flex:none;text-align:left;padding:12px;font-size:14px;border-radius:8px}#nav button.on{box-shadow:none;background:#202022}
+main{margin-left:210px;padding:32px 40px;max-width:none}main>*{max-width:900px}.stats{grid-template-columns:repeat(4,1fr)}#toast{bottom:24px}}
+#dlg{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}#dlg.show{display:flex}#dlg .card{width:100%;max-width:360px;margin:0}#dlg p{margin:6px 0 12px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<div id="load"></div><nav id="nav"></nav><main id="app"></main><div id="toast"></div><div id="dlg"><div class="card"><h3 id="dt"></h3><p class="muted" id="dm"></p><input id="di" maxlength="40"><div class="row g"><button class="btn" id="dc">Cancel</button><button class="btn pri" id="dk">OK</button></div></div></div>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const istNow=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kolkata'}).format(new Date());
+const S={ex:[],rec:[],cfg:{},today:istNow(),page:'dash',sel:'',date:'',am:'',hm:'',hf:'',cmp:'',ai:'',rid:null,busy:0,charts:{}};
+const PAGES=[['dash','Home'],['ex','Exercises'],['track','Track'],['an','Analytics'],['hist','History'],['set','Settings']];
+const PAL=['#c8a96a','#6f8faf','#7fa18b','#b5788a','#8e7cc3','#a89f91'];
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const act=()=>S.ex.filter(e=>e.status==='Active'),nm=id=>(S.ex.find(e=>e.id===id)||{name:'Removed'}).name;
+const xi=id=>Math.max(0,S.ex.findIndex(e=>e.id===id)),col=id=>PAL[xi(id)%PAL.length];
+const vis=r=>{if(r.date!==S.today)return true;const t=S.cfg['ResetAt:'+S.today];return!(t&&r.at<=t)};
+const recs=(d,f)=>S.rec.filter(r=>r.date===d&&(!f||vis(r)));
+const sum=rs=>rs.reduce((a,r)=>a+r.reps,0);
+const byEx=rs=>{const m={};rs.forEach(r=>{const o=m[r.ex]=m[r.ex]||{sum:0,n:0};o.sum+=r.reps;o.n++});return m};
+const fmtD=d=>new Date(d+'T00:00:00').toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+const addDays=(d,n)=>{const t=new Date(d+'T00:00:00Z');t.setUTCDate(t.getUTCDate()+n);return t.toISOString().slice(0,10)};
+const empty=(t,p,b)=>`<div class="empty">${t}${b?`<br><button class="btn pri" data-p="${p}">${b}</button>`:''}</div>`;
+const st=(l,v)=>`<div class="stat"><small>${l}</small><b>${v}</b></div>`;
+let tt;function toast(m,err){const t=$('#toast');t.textContent=m;t.className='show'+(err?' err':'');clearTimeout(tt);tt=setTimeout(()=>t.className='',3200)}
+function fail(m){toast(m,1);if(!S.ok)$('#app').innerHTML='<div class="empty">Could not load your data.<br><button class="btn pri" onclick="call(\'list\')">Retry</button></div>'}
+function call(action,p){$('#load').style.width='70%';return new Promise(res=>{google.script.run
+.withSuccessHandler(r=>{$('#load').style.width='0';if(r&&r.ok){load(r.data);res(true)}else{fail((r&&r.error)||'Request failed');res(false)}})
+.withFailureHandler(()=>{$('#load').style.width='0';fail('Connection problem. Your entry is still on screen; try again.');res(false)}).api(action,p||{})})}
+function load(d){S.ok=1;S.ex=d.exercises;S.rec=d.records;S.cfg=d.settings;S.today=d.today;
+S.date=S.date||d.today;S.am=S.am||d.today.slice(0,7);S.hm=S.hm||d.today.slice(0,7);S.cmp=S.cmp||addDays(d.today,-1);render()}
+function render(){document.querySelectorAll('#nav button[data-p]').forEach(b=>b.classList.toggle('on',b.dataset.p===S.page));
+Object.values(S.charts).forEach(c=>c.destroy());S.charts={};({dash:vDash,ex:vEx,track:vTrack,an:vAn,hist:vHist,set:vSet})[S.page]($('#app'));if(S.page==='an')charts()}
+function go(p){S.page=p;S.rid=null;render();scrollTo(0,0)}
+
+function vDash(a){const rs=recs(S.today,1),m=byEx(rs),ids=Object.keys(m).sort((x,y)=>m[y].sum-m[x].sum),mx=Math.max(1,...ids.map(i=>m[i].sum));
+a.innerHTML=`<header><h1>Today</h1><p>${fmtD(S.today)}</p></header>
+<section class="stats">${st('Exercises',act().length)}${st('Sets today',rs.length)}${st('Reps today',sum(rs))}${st('Most performed',ids[0]?esc(nm(ids[0])):'None yet')}</section>
+<section class="cards">${act().length?act().map(e=>{const v=m[e.id]||{sum:0,n:0};return`<article class="card"><div class="row"><h3>${esc(e.name)}</h3><small>${v.n} set${v.n==1?'':'s'}</small></div><div class="big">${v.sum}</div><div class="bar"><i style="width:${v.sum/mx*100}%"></i></div><div class="row g"><button class="btn pri" data-go="${e.id}">Add set</button><button class="btn" data-det="${e.id}">View details</button></div></article>`}).join(''):empty('No exercises yet. Create one to start tracking.','ex','Add exercise')}</section>
+${rs.length?`<section class="card"><h3>Activity today</h3><table>${rs.slice().reverse().slice(0,8).map(r=>`<tr><td>${esc(nm(r.ex))}</td><td>Set ${r.n}</td><td>${r.reps}</td></tr>`).join('')}</table></section>`:''}`}
+
+function vEx(a){a.innerHTML=`<header><h1>My exercises</h1><p>Archived exercises stay in your history.</p></header>
+<div class="card"><div class="row"><input id="newEx" maxlength="40" placeholder="Exercise name"><button class="btn pri" data-a="addEx">Add</button></div></div>
+${act().length?`<div class="card">${act().map(e=>`<div class="row" style="padding:8px 0"><span>${esc(e.name)}</span><span class="row"><button class="btn" data-ren="${e.id}">Rename</button><button class="btn bad" data-del="${e.id}">Delete</button></span></div>`).join('')}</div>`:empty('Nothing here yet. Type a name above to create your first exercise.')}`}
+
+function vTrack(a){const ex=act();if(!ex.find(e=>e.id===S.sel))S.sel=ex[0]?ex[0].id:'';
+if(!ex.length){a.innerHTML=`<header><h1>Track</h1></header>`+empty('Create an exercise before logging sets.','ex','Add exercise');return}
+const rs=recs(S.date,S.date===S.today).filter(r=>r.ex===S.sel).sort((x,y)=>x.n-y.n),last=rs[rs.length-1];
+a.innerHTML=`<header><h1>Track</h1><p>${fmtD(S.date)}</p></header>
+<div class="chips">${ex.map(e=>`<button class="btn chip${e.id===S.sel?' on':''}" data-sel="${e.id}">${esc(e.name)}</button>`).join('')}</div>
+<div class="card"><input type="date" id="td" value="${S.date}" max="${S.today}" data-f="date" style="margin-bottom:12px">
+<input class="num" id="reps" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="Reps in this set">
+<button class="btn pri" id="addBtn" data-a="addSet" style="width:100%;margin-top:12px;font-size:17px">Add set</button></div>
+<div class="stats"><div class="stat"><small>Total reps</small><b>${sum(rs)}</b></div><div class="stat"><small>Sets</small><b>${rs.length}</b></div></div>
+<div class="card"><div class="row"><h3>Sets</h3><small>${last?'Latest: '+last.reps:''}</small></div>
+${rs.length?`<table>${rs.map(r=>`<tr><td>Set ${r.n}</td><td>${r.reps}</td><td><button class="btn" data-edit="${r.id}" data-v="${r.reps}" data-n="${r.n}">Edit</button> <button class="btn bad" data-rm="${r.id}">Delete</button></td></tr>`).join('')}<tr><th>Total</th><th>${sum(rs)}</th><th></th></tr></table>`:'<p class="muted">No sets for this exercise on this date.</p>'}</div>`}
+
+function vAn(a){const o=act().concat(S.ex.filter(e=>e.status!=='Active'&&S.rec.some(r=>r.ex===e.id)));if(!S.ai||!S.ex.find(e=>e.id===S.ai))S.ai=(o[0]||{}).id||'';
+const mine=S.rec.filter(r=>r.ex===S.ai),days={};mine.forEach(r=>days[r.date]=(days[r.date]||0)+r.reps);const dv=Object.values(days),tot=dv.reduce((x,y)=>x+y,0);
+a.innerHTML=`<header><h1>Analytics</h1></header><div class="ctl"><input type="date" value="${S.date}" max="${S.today}" data-f="date"><input type="month" value="${S.am}" data-f="am"><select data-f="ai">${o.map(e=>`<option value="${e.id}"${e.id===S.ai?' selected':''}>${esc(e.name)}</option>`).join('')}</select></div>
+<div class="card"><h3>Daily totals</h3><small>${fmtD(S.date)}</small><div class="ch"><canvas id="cA"></canvas></div></div>
+<div class="card"><h3>Last 7 days</h3><small>Ending ${fmtD(S.date)}</small><div class="ch"><canvas id="cB"></canvas></div></div>
+<div class="card"><h3>Monthly trend</h3><div class="ch"><canvas id="cC"></canvas></div></div>
+<div class="card"><h3>Exercise history</h3><small>${dv.length?`Total ${tot} · Best day ${Math.max(...dv)} · Average ${Math.round(tot/dv.length)} over ${dv.length} days`:'No records yet'}</small><div class="ch"><canvas id="cD"></canvas></div></div>
+<div class="card"><h3>Distribution</h3><small>${fmtD(S.date)}</small><div class="ch"><canvas id="cE"></canvas></div></div>`}
+function mk(id,type,labels,sets){S.charts[id]=new Chart($('#'+id),{type,data:{labels,datasets:sets},options:{responsive:true,maintainAspectRatio:false,
+plugins:{legend:{display:sets.length>1||type==='doughnut',labels:{boxWidth:10}}},scales:type==='doughnut'?{}:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:'#2a2a2d'}}}}})}
+function charts(){Chart.defaults.color='#8c8a85';Chart.defaults.font.family='Manrope';const d=S.date,m=byEx(recs(d)),ids=Object.keys(m);
+mk('cA','bar',ids.map(nm),[{data:ids.map(i=>m[i].sum),backgroundColor:ids.map(col),borderRadius:4}]);
+const w=[...Array(7)].map((_,i)=>addDays(d,i-6));
+mk('cB','bar',w.map(x=>x.slice(5)),S.ex.filter(e=>S.rec.some(r=>r.ex===e.id&&w.includes(r.date))).map(e=>({label:e.name,backgroundColor:col(e.id),borderRadius:3,data:w.map(x=>sum(recs(x).filter(r=>r.ex===e.id)))})));
+const[y,mo]=S.am.split('-').map(Number),ml=[...Array(new Date(y,mo,0).getDate())].map((_,i)=>`${S.am}-${String(i+1).padStart(2,'0')}`);
+mk('cC','line',ml.map(x=>+x.slice(8)),[{label:'Total reps',data:ml.map(x=>sum(recs(x))),borderColor:PAL[0],backgroundColor:'rgba(200,169,106,.12)',fill:true,tension:.3,pointRadius:2}]);
+const p=[...Array(30)].map((_,i)=>addDays(d,i-29));
+mk('cD','line',p.map(x=>x.slice(5)),[{label:nm(S.ai),data:p.map(x=>sum(recs(x).filter(r=>r.ex===S.ai))),borderColor:col(S.ai),tension:.3,pointRadius:2}]);
+mk('cE','doughnut',ids.map(nm),[{data:ids.map(i=>m[i].sum),backgroundColor:ids.map(col),borderColor:'#1a1a1c'}])}
+
+function cal(){const[y,m]=S.hm.split('-').map(Number),pad=(new Date(Date.UTC(y,m-1,1)).getUTCDay()+6)%7;let h='<i></i>'.repeat(pad);
+for(let d=1;d<=new Date(Date.UTC(y,m,0)).getUTCDate();d++){const ds=`${S.hm}-${String(d).padStart(2,'0')}`,t=sum(recs(ds));h+=`<button class="day${ds===S.date?' on':''}${t?' has':''}" data-day="${ds}">${d}${t?`<small>${t}</small>`:''}</button>`}return h}
+function vHist(a){const f=S.hf,dr=recs(S.date).filter(r=>!f||r.ex===f),m=byEx(dr),w=[...Array(7)].map((_,i)=>addDays(S.date,i-6)),wr=S.rec.filter(r=>w.includes(r.date)&&(!f||r.ex===f)),mr=S.rec.filter(r=>r.date.slice(0,7)===S.date.slice(0,7)&&(!f||r.ex===f));
+const dates=[...new Set(S.rec.filter(r=>!f||r.ex===f).map(r=>r.date))].sort().reverse().slice(0,60),c1=byEx(recs(S.date)),c2=byEx(recs(S.cmp)),cids=[...new Set(Object.keys(c1).concat(Object.keys(c2)))];
+a.innerHTML=`<header><h1>History</h1></header>
+<div class="card"><div class="row"><button class="btn" data-mo="-1">‹</button><b>${new Date(S.hm+'-01T00:00:00').toLocaleDateString('en-IN',{month:'long',year:'numeric'})}</b><button class="btn" data-mo="1">›</button></div><div class="cal">${cal()}</div></div>
+<div class="ctl"><select data-f="hf"><option value="">All exercises</option>${S.ex.map(e=>`<option value="${e.id}"${e.id===f?' selected':''}>${esc(e.name)}</option>`).join('')}</select><input type="date" value="${S.date}" max="${S.today}" data-f="date"></div>
+<div class="card"><div class="row"><h3>${fmtD(S.date)}</h3><b>${sum(dr)} reps</b></div>${dr.length?Object.keys(m).map(i=>`<p style="margin-top:10px"><b>${esc(nm(i))}</b> <span class="muted">${m[i].sum} in ${m[i].n} sets</span><br><small>${dr.filter(r=>r.ex===i).map(r=>r.reps).join(' · ')}</small></p>`).join(''):'<p class="muted">No records on this date.</p>'}</div>
+<div class="stats">${st('Last 7 days',sum(wr))}${st('Active days',new Set(wr.map(r=>r.date)).size)}${st('This month',sum(mr))}${st('Month active days',new Set(mr.map(r=>r.date)).size)}</div>
+<div class="card"><h3>Compare days</h3><div class="ctl" style="margin-top:8px"><input type="date" value="${S.cmp}" max="${S.today}" data-f="cmp"></div>
+${cids.length?`<table><tr><th>Exercise</th><th>${S.date.slice(5)}</th><th>${S.cmp.slice(5)}</th></tr>${cids.map(i=>`<tr><td>${esc(nm(i))}</td><td>${(c1[i]||{sum:0}).sum}</td><td style="text-align:right">${(c2[i]||{sum:0}).sum}</td></tr>`).join('')}</table>`:'<p class="muted">No records on either date.</p>'}</div>
+<div class="card"><h3>All sessions</h3>${dates.length?`<table>${dates.map(d=>`<tr><td><a href="#" data-day="${d}" style="color:var(--ac)">${fmtD(d)}</a></td><td>${sum(S.rec.filter(r=>r.date===d&&(!f||r.ex===f)))}</td></tr>`).join('')}</table>`:'<p class="muted">Your sessions will appear here.</p>'}</div>`}
+
+function vSet(a){const r=S.cfg['ResetAt:'+S.today];a.innerHTML=`<header><h1>Settings</h1></header>
+<div class="card"><h3>Sync</h3><p class="muted">Reload everything from Google Sheets.</p><button class="btn pri g" data-a="sync">Sync now</button></div>
+<div class="card"><h3>Today's display</h3><p class="muted">Show zero for today without deleting any records. History is unaffected.</p>
+<div class="row g"><button class="btn" data-a="reset">Reset today's display</button>${r?'<button class="btn" data-a="restore">Show all of today</button>':''}</div></div>
+<div class="card"><h3>About</h3><p class="muted">Timezone Asia/Kolkata. Data lives in your private Google Sheet, "RepVault Database", in your Google Drive.</p></div>`}
+
+async function addSet(){const v=$('#reps').value.trim();if(!/^\d{1,6}$/.test(v)||+v<1)return toast('Enter repetitions as a whole number above 0','err');if(S.busy)return;
+S.busy=1;$('#addBtn').disabled=true;S.rid=S.rid||uid();const ok=await call('addSet',{exerciseId:S.sel,date:S.date,reps:+v,requestId:S.rid});S.busy=0;
+if(ok){S.rid=null;toast('Set added');const i=$('#reps');if(i)i.focus()}else{const b=$('#addBtn');if(b)b.disabled=false}}
+function ask(o){return new Promise(res=>{const d=$('#dlg'),i=$('#di'),k=$('#dk'),c=$('#dc');$('#dt').textContent=o.title;$('#dm').textContent=o.msg||'';i.style.display=o.input?'':'none';i.value=o.value||'';i.inputMode=o.num?'numeric':'text';
+k.textContent=o.ok||'OK';k.className='btn '+(o.bad?'bad':'pri');d.classList.add('show');if(o.input)setTimeout(()=>{i.focus();i.select()},30);
+const done=v=>{d.classList.remove('show');k.onclick=c.onclick=i.onkeydown=null;res(v)};k.onclick=()=>done(o.input?i.value.trim():true);c.onclick=()=>done(null);i.onkeydown=e=>{if(e.key==='Enter')k.onclick();if(e.key==='Escape')done(null)}})}
+async function simple(act,p,msg){if(await call(act,p))toast(msg)}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-p],[data-go],[data-det],[data-a],[data-ren],[data-del],[data-sel],[data-edit],[data-rm],[data-day],[data-mo]');if(!t)return;e.preventDefault();const d=t.dataset;
+if(d.p)return go(d.p);if(d.go){S.sel=d.go;S.date=S.today;return go('track')}if(d.det){S.hf=d.det;S.date=S.today;return go('hist')}
+if(d.sel){S.sel=d.sel;S.rid=null;return render()}if(d.day){S.date=d.day;S.hm=d.day.slice(0,7);return render()}
+if(d.mo){const[y,m]=S.hm.split('-').map(Number),n=new Date(Date.UTC(y,m-1+ +d.mo,1));S.hm=n.toISOString().slice(0,7);return render()}
+if(d.edit){ask({title:'Edit set '+d.n,input:1,num:1,value:d.v,ok:'Save'}).then(v=>v&&simple('editSet',{id:d.edit,reps:v},'Set updated'));return}
+if(d.rm){ask({title:'Delete this set?',msg:'The remaining sets are renumbered.',ok:'Delete',bad:1}).then(v=>v&&simple('deleteSet',{id:d.rm},'Set deleted'));return}
+if(d.ren){const o=nm(d.ren);ask({title:'Rename exercise',input:1,value:o,ok:'Save'}).then(v=>v&&v!==o&&simple('renameExercise',{id:d.ren,name:v},'Exercise renamed'));return}
+if(d.del){ask({title:'Delete "'+nm(d.del)+'"?',msg:'It is archived. Past records stay in History.',ok:'Delete',bad:1}).then(v=>v&&simple('deleteExercise',{id:d.del},'Exercise deleted'));return}
+if(d.a==='addSet')return addSet();if(d.a==='sync')return simple('list',{},'Synced');
+if(d.a==='reset'){ask({title:"Reset today's display?",msg:'Nothing is deleted. History is unaffected.',ok:'Reset'}).then(v=>v&&simple('resetToday',{},"Today's display reset"));return}
+if(d.a==='restore')return simple('restoreToday',{},'Showing all of today');
+if(d.a==='addEx'){const i=$('#newEx'),v=i.value.trim();if(!v)return toast('Enter a name','err');call('addExercise',{name:v}).then(ok=>ok&&toast('Exercise added'))}});
+document.addEventListener('change',e=>{const k=e.target.dataset.f;if(!k)return;let v=e.target.value;if(k==='date'){if(!v||v>S.today)return;S.rid=null}S[k]=v;if(k==='date')S.hm=v.slice(0,7);render()});
+document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;if(e.target.id==='reps')addSet();if(e.target.id==='newEx')document.querySelector('[data-a=addEx]').click()});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){if(istNow()!==S.today){S.date=S.am=S.hm='';}call('list')}});
+$('#nav').innerHTML='<div class="brand">RepVault</div>'+PAGES.map(p=>`<button data-p="${p[0]}">${p[1]}</button>`).join('');
+$('#app').innerHTML='<p class="muted">Loading…</p>';call('list');
+</script></body></html>
