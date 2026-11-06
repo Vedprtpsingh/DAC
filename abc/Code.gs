@@ -6,6 +6,17 @@ const SHEETS = {
   Settings: ['Setting_Name', 'Setting_Value']
 };
 
+
+const TOKEN = 'jfeji48939039idif8f7f76r74uh4nneke3o39idjru4u43henhu43u4u4u';
+
+function doPost(e) {
+  const b = JSON.parse(e.postData.contents);
+  const out = b.token === TOKEN
+    ? api(b.action, b.p)
+    : { ok: false, error: 'Unauthorized' };
+  return ContentService.createTextOutput(JSON.stringify(out))
+    .setMimeType(ContentService.MimeType.JSON);
+}
 function doGet() {
   return HtmlService.createHtmlOutputFromFile('Index').setTitle('RepVault')
     .addMetaTag('viewport', 'width=device-width, initial-scale=1, viewport-fit=cover');
