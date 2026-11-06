@@ -2,8 +2,8 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#121213"><meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="RepVault">
-<title>RepVault</title>
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="RepTrack">
+<title>RepTrack</title>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Newsreader:wght@500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
@@ -129,7 +129,7 @@ function vSet(a){const r=S.cfg['ResetAt:'+S.today];a.innerHTML=`<header><h1>Sett
 <div class="card"><h3>Sync</h3><p class="muted">Reload everything from Google Sheets.</p><button class="btn pri g" data-a="sync">Sync now</button></div>
 <div class="card"><h3>Today's display</h3><p class="muted">Show zero for today without deleting any records. History is unaffected.</p>
 <div class="row g"><button class="btn" data-a="reset">Reset today's display</button>${r?'<button class="btn" data-a="restore">Show all of today</button>':''}</div></div>
-<div class="card"><h3>About</h3><p class="muted">Timezone Asia/Kolkata. Data lives in your private Google Sheet, "RepVault Database", in your Google Drive.</p></div>`}
+<div class="card"><h3>About</h3><p class="muted">Timezone Asia/Kolkata. Data lives in your private Google Sheet, "RepTrack Database", in your Google Drive.</p></div>`}
 
 async function addSet(){const v=$('#reps').value.trim();if(!/^\d{1,6}$/.test(v)||+v<1)return toast('Enter repetitions as a whole number above 0','err');if(S.busy)return;
 S.busy=1;$('#addBtn').disabled=true;S.rid=S.rid||uid();const ok=await call('addSet',{exerciseId:S.sel,date:S.date,reps:+v,requestId:S.rid});S.busy=0;
@@ -153,6 +153,6 @@ if(d.a==='addEx'){const i=$('#newEx'),v=i.value.trim();if(!v)return toast('Enter
 document.addEventListener('change',e=>{const k=e.target.dataset.f;if(!k)return;let v=e.target.value;if(k==='date'){if(!v||v>S.today)return;S.rid=null}S[k]=v;if(k==='date')S.hm=v.slice(0,7);render()});
 document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;if(e.target.id==='reps')addSet();if(e.target.id==='newEx')document.querySelector('[data-a=addEx]').click()});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){if(istNow()!==S.today){S.date=S.am=S.hm='';}call('list')}});
-$('#nav').innerHTML='<div class="brand">RepVault</div>'+PAGES.map(p=>`<button data-p="${p[0]}">${p[1]}</button>`).join('');
+$('#nav').innerHTML='<div class="brand">RepTrack</div>'+PAGES.map(p=>`<button data-p="${p[0]}">${p[1]}</button>`).join('');
 $('#app').innerHTML='<p class="muted">Loading…</p>';call('list');
 </script></body></html>

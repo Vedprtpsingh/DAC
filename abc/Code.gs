@@ -1,4 +1,4 @@
-/** RepVault backend. Deploy as Web App: Execute as "Me", Access "Only myself". */
+/** RepTrack backend. Deploy as Web App: Execute as "Me", Access "Only myself". */
 const TZ = 'Asia/Kolkata';
 const SHEETS = {
   Exercises: ['Exercise_ID', 'Exercise_Name', 'Created_Date', 'Status'],
@@ -18,7 +18,7 @@ function doPost(e) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 function doGet() {
-  return HtmlService.createHtmlOutputFromFile('Index').setTitle('RepVault')
+  return HtmlService.createHtmlOutputFromFile('Index').setTitle('RepTrack')
     .addMetaTag('viewport', 'width=device-width, initial-scale=1, viewport-fit=cover');
 }
 
@@ -31,7 +31,7 @@ function db_() {
   let ss = null;
   const id = props.getProperty('SS_ID');
   if (id) { try { ss = SpreadsheetApp.openById(id); } catch (e) { ss = null; } }
-  if (!ss) { ss = SpreadsheetApp.create('RepVault Database'); props.setProperty('SS_ID', ss.getId()); }
+  if (!ss) { ss = SpreadsheetApp.create('RepTrack Database'); props.setProperty('SS_ID', ss.getId()); }
   if (ss.getSpreadsheetTimeZone() !== TZ) ss.setSpreadsheetTimeZone(TZ);
   Object.keys(SHEETS).forEach(n => {
     if (ss.getSheetByName(n)) return;

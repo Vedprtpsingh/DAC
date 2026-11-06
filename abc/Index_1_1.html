@@ -3,8 +3,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0e0e0f"><meta name="color-scheme" content="dark">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="RepVault">
-<title>RepVault</title>
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="RepTrack">
+<title>RepTrack</title>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
@@ -155,9 +155,31 @@ const st=(l,v,c)=>`<div class="stat${c?' '+c:''}"><small>${l}</small><b>${v}</b>
 const skel=()=>'<div class="sk" style="height:44px;width:55%;margin-bottom:22px"></div><div class="sk" style="height:180px;margin-bottom:14px"></div><div class="stats"><div class="sk" style="height:76px"></div><div class="sk" style="height:76px"></div></div><div class="sk" style="height:200px"></div>';
 let tt,et;function toast(m,err){const t=$('#toast');t.innerHTML=ic(err?'alert':'check')+'<span>'+esc(m)+'</span>';t.className='show'+(err?' err':'');clearTimeout(tt);tt=setTimeout(()=>t.className='',3200)}
 function fail(m){toast(m,1);if(!S.ok)$('#app').innerHTML=empty('Could not load your data. Check your connection and try again.',0,0,'alert').replace('</div>','<button class="btn pri" onclick="call(\'list\')">'+ic('refresh')+'Try again</button></div>')}
-function call(action,p){$('#load').style.width='70%';return new Promise(res=>{google.script.run
-.withSuccessHandler(r=>{$('#load').style.width='0';if(r&&r.ok){load(r.data);res(true)}else{fail((r&&r.error)||'Request failed');res(false)}})
-.withFailureHandler(()=>{$('#load').style.width='0';fail('Connection problem. Your entry is still on screen; try again.');res(false)}).api(action,p||{})})}
+
+
+
+const API = 'https://script.google.com/macros/s/AKfycbwVWT0WyXb-HAfLSGJzwGqfscQn_BAZUP_WkflUO6dEKFNP8L22E7XwtgDjnLbhcW6g_Q/exec';
+const TOKEN = 'jfeji48939039idif8f7f76r74uh4nneke3o39idjru4u43henhu43u4u4u';
+
+function call(action,p){
+  $('#load').style.width='70%';
+  return fetch(API,{
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=utf-8'}, // avoids CORS preflight
+    body:JSON.stringify({token:TOKEN,action,p:p||{}})
+  }).then(r=>r.json()).then(r=>{
+    $('#load').style.width='0';
+    if(r&&r.ok){load(r.data);return true}
+    fail((r&&r.error)||'Request failed');return false;
+  }).catch(()=>{
+    $('#load').style.width='0';
+    fail('Connection problem. Your entry is still on screen; try again.');
+    return false;
+  });
+}
+
+
+
 function load(d){const first=!S.ok;S.ok=1;S.ex=d.exercises;S.rec=d.records;S.cfg=d.settings;S.today=d.today;S.synced=new Date();
 S.date=S.date||d.today;S.am=S.am||d.today.slice(0,7);S.hm=S.hm||d.today.slice(0,7);S.cmp=S.cmp||addDays(d.today,-1);if(first)enter();render()}
 function enter(){const a=$('#app');a.classList.add('enter');clearTimeout(et);et=setTimeout(()=>a.classList.remove('enter'),1400)}
@@ -246,7 +268,7 @@ function vSet(a){const r=S.cfg['ResetAt:'+S.today],t=S.synced?S.synced.toLocaleT
 <div class="card"><h3>Sync</h3><p class="muted">Reload everything from Google Sheets.${t?' Last synced at '+t+'.':''}</p><button class="btn pri g" data-a="sync">${ic('refresh')}Sync now</button></div>
 <div class="card"><h3>Today's display</h3><p class="muted">Show zero for today without deleting any records. History is unaffected.</p>
 <div class="row g"><button class="btn" data-a="reset">Reset today's display</button>${r?'<button class="btn" data-a="restore">Show all of today</button>':''}</div></div>
-<div class="card"><h3>About</h3><p class="muted">Timezone Asia/Kolkata. Data lives in your private Google Sheet, "RepVault Database", in your Google Drive.</p></div>`}
+<div class="card"><h3>About</h3><p class="muted">Timezone Asia/Kolkata. Data lives in your private Google Sheet, "RepTrack Database", in your Google Drive.</p></div>`}
 
 async function addSet(){const v=$('#reps').value.trim();if(!/^\d{1,6}$/.test(v)||+v<1)return toast('Enter repetitions as a whole number above 0','err');if(S.busy)return;
 S.busy=1;const b=$('#addBtn');b.disabled=true;b.textContent='Adding…';S.rid=S.rid||uid();const ok=await call('addSet',{exerciseId:S.sel,date:S.date,reps:+v,requestId:S.rid});S.busy=0;
@@ -276,6 +298,6 @@ document.addEventListener('keydown',e=>{const d=$('#dlg');if(d.classList.contain
 if(e.key==='Tab'){const f=[...d.querySelectorAll('input,button')].filter(x=>x.offsetParent),i=f.indexOf(document.activeElement);if(e.shiftKey&&i<=0){e.preventDefault();f[f.length-1].focus()}else if(!e.shiftKey&&i===f.length-1){e.preventDefault();f[0].focus()}}return}
 if(e.key!=='Enter')return;if(e.target.id==='reps')addSet();if(e.target.id==='newEx')document.querySelector('[data-a=addEx]').click()});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){if(istNow()!==S.today){S.date=S.am=S.hm='';}call('list')}});
-$('#nav').innerHTML='<div class="brand"><i></i>RepVault</div>'+PAGES.map(p=>`<button data-p="${p[0]}" aria-label="${p[1]}">${ic(p[0])}<span>${p[1]}</span></button>`).join('');
+$('#nav').innerHTML='<div class="brand"><i></i>RepTrack</div>'+PAGES.map(p=>`<button data-p="${p[0]}" aria-label="${p[1]}">${ic(p[0])}<span>${p[1]}</span></button>`).join('');
 $('#app').innerHTML=skel();call('list');
 </script></body></html>
