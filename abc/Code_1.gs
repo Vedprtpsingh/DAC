@@ -1,0 +1,160 @@
+/** RepTrack backend. Deploy as Web App: Execute as "Me", Who has access: "Anyone". Token below protects it. */
+const TZ = 'Asia/Kolkata';
+const SHEETS = {
+  Exercises: ['Exercise_ID', 'Exercise_Name', 'Created_Date', 'Status'],
+  Exercise_Records: ['Record_ID', 'Exercise_ID', 'Exercise_Name', 'Exercise_Date', 'Set_Number', 'Repetitions', 'Created_At', 'Updated_At'],
+  Settings: ['Setting_Name', 'Setting_Value']
+};
+
+
+const TOKEN = 'jfeji48939039idif8f7f76r74uh4nneke3o39idjru4u43henhu43u4u4u';
+
+function doPost(e) {
+  let out;
+  try {
+    const b = JSON.parse((e && e.postData && e.postData.contents) || '{}');
+    out = b.token === TOKEN ? api(b.action, b.p) : { ok: false, error: 'Unauthorized' };
+  } catch (err) {
+    out = { ok: false, error: 'Bad request' };
+  }
+  return ContentService.createTextOutput(JSON.stringify(out))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// Health check only. The page itself is hosted on Vercel, so no Index.html is needed here.
+function doGet() {
+  return ContentService.createTextOutput(JSON.stringify({ ok: true, service: 'RepTrack API' }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+/** Run once from the editor to authorize and create the database. */
+function setup() { db_(); }
+
+/* ---------- helpers ---------- */
+function db_() {
+  const props = PropertiesService.getScriptProperties();
+  let ss = null;
+  const id = props.getProperty('SS_ID');
+  if (id) { try { ss = SpreadsheetApp.openById(id); } catch (e) { ss = null; } }
+  if (!ss) { ss = SpreadsheetApp.create('RepTrack Database'); props.setProperty('SS_ID', ss.getId()); }
+  if (ss.getSpreadsheetTimeZone() !== TZ) ss.setSpreadsheetTimeZone(TZ);
+  Object.keys(SHEETS).forEach(n => {
+    if (ss.getSheetByName(n)) return;
+    const s = ss.insertSheet(n);
+    s.getRange('A:Z').setNumberFormat('@'); // keep dates and IDs as plain text
+    s.getRange(1, 1, 1, SHEETS[n].length).setValues([SHEETS[n]]).setFontWeight('bold');
+    s.setFrozenRows(1);
+  });
+  const def = ss.getSheetByName('Sheet1');
+  if (def && ss.getSheets().length > 1) ss.deleteSheet(def);
+  return ss;
+}
+const today_ = () => Utilities.formatDate(new Date(), TZ, 'yyyy-MM-dd');
+// Sheets can auto-convert date text to Date objects: always normalise on read.
+const isDate_ = v => Object.prototype.toString.call(v) === '[object Date]';
+const dStr_ = v => isDate_(v) ? Utilities.formatDate(v, TZ, 'yyyy-MM-dd') : String(v).slice(0, 10);
+const tStr_ = v => isDate_(v) ? v.toISOString() : String(v);
+function append_(s, row) { // write as plain text so dates stay exactly as typed
+  const g = s.getRange(s.getLastRow() + 1, 1, 1, row.length);
+  g.setNumberFormat('@'); g.setValues([row]);
+}
+const uid_ = p => p + '_' + Utilities.getUuid().slice(0, 8);
+const rows_ = s => { const n = s.getLastRow(); return n < 2 ? [] : s.getRange(2, 1, n - 1, s.getLastColumn()).getValues(); };
+function rowIdx_(s, id) {
+  const r = rows_(s);
+  for (let i = 0; i < r.length; i++) if (String(r[i][0]) === String(id)) return i + 2;
+  throw new Error('Record not found');
+}
+function name_(v) {
+  v = String(v || '').replace(/\s+/g, ' ').trim().replace(/^[=+\-@]+/, '');
+  if (!v || v.length > 40) throw new Error('Name must be 1 to 40 characters');
+  return v;
+}
+function reps_(v) {
+  v = Number(v);
+  if (!Number.isInteger(v) || v < 1 || v > 100000) throw new Error('Repetitions must be a whole number from 1 to 100000');
+  return v;
+}
+function date_(v) {
+  v = String(v || today_());
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(v) || v > today_()) throw new Error('Invalid date');
+  return v;
+}
+function put_(ss, k, v) {
+  const s = ss.getSheetByName('Settings'), r = rows_(s);
+  for (let i = 0; i < r.length; i++) if (r[i][0] === k) { s.getRange(i + 2, 2).setValue(v); return; }
+  append_(s, [k, v]);
+}
+function data_(ss) {
+  const ex = rows_(ss.getSheetByName('Exercises')).map(r => ({ id: String(r[0]), name: String(r[1]), status: String(r[3]) }));
+  const rec = rows_(ss.getSheetByName('Exercise_Records')).map(r => ({
+    id: String(r[0]), ex: String(r[1]), date: dStr_(r[3]), n: Number(r[4]), reps: Number(r[5]), at: tStr_(r[6])
+  }));
+  const cfg = {};
+  rows_(ss.getSheetByName('Settings')).forEach(r => { if (r[1] !== '') cfg[r[0]] = String(r[1]); });
+  return { today: today_(), exercises: ex, records: rec, settings: cfg };
+}
+
+/* ---------- actions ---------- */
+const A = {
+  list() {},
+  addExercise(ss, p) {
+    const n = name_(p.name), s = ss.getSheetByName('Exercises');
+    if (rows_(s).some(r => r[3] === 'Active' && String(r[1]).toLowerCase() === n.toLowerCase()))
+      throw new Error('An exercise with that name already exists');
+    append_(s, [uid_('ex'), n, today_(), 'Active']);
+  },
+  renameExercise(ss, p) {
+    const s = ss.getSheetByName('Exercises'), n = name_(p.name);
+    if (rows_(s).some(r => r[3] === 'Active' && String(r[0]) !== String(p.id) && String(r[1]).toLowerCase() === n.toLowerCase())) throw new Error('An exercise with that name already exists');
+    s.getRange(rowIdx_(s, p.id), 2).setValue(n); // history keeps its own IDs
+  },
+  deleteExercise(ss, p) { // archived, never erased: history stays intact
+    const s = ss.getSheetByName('Exercises');
+    s.getRange(rowIdx_(s, p.id), 4).setValue('Archived');
+  },
+  addSet(ss, p) {
+    if (!p.requestId) throw new Error('Missing request ID');
+    const cache = CacheService.getScriptCache(), key = 'rid_' + String(p.requestId).slice(0, 40);
+    if (cache.get(key)) return; // duplicate submission
+    const ex = rows_(ss.getSheetByName('Exercises')).find(r => String(r[0]) === String(p.exerciseId) && r[3] === 'Active');
+    if (!ex) throw new Error('Exercise not found');
+    const d = date_(p.date), v = reps_(p.reps), s = ss.getSheetByName('Exercise_Records');
+    const n = rows_(s).filter(r => String(r[1]) === String(ex[0]) && dStr_(r[3]) === d).length + 1;
+    const now = new Date().toISOString();
+    append_(s, [uid_('rec'), ex[0], ex[1], d, n, v, now, now]);
+    cache.put(key, '1', 600);
+  },
+  editSet(ss, p) {
+    const s = ss.getSheetByName('Exercise_Records'), i = rowIdx_(s, p.id);
+    s.getRange(i, 6).setValue(reps_(p.reps));
+    s.getRange(i, 8).setValue(new Date().toISOString());
+  },
+  deleteSet(ss, p) {
+    const s = ss.getSheetByName('Exercise_Records'), i = rowIdx_(s, p.id);
+    const row = s.getRange(i, 1, 1, 8).getValues()[0];
+    s.deleteRow(i);
+    let n = 0; // renumber remaining sets for that exercise and day
+    rows_(s).forEach((r, j) => {
+      if (String(r[1]) === String(row[1]) && dStr_(r[3]) === dStr_(row[3])) s.getRange(j + 2, 5).setValue(++n);
+    });
+  },
+  resetToday(ss) { put_(ss, 'ResetAt:' + today_(), new Date().toISOString()); },
+  restoreToday(ss) { put_(ss, 'ResetAt:' + today_(), ''); }
+};
+
+/** Single entry point called by the frontend. Locked to prevent simultaneous writes. */
+function api(action, p) {
+  const lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(20000);
+    if (!Object.prototype.hasOwnProperty.call(A, action)) throw new Error('Unknown action');
+    const ss = db_();
+    A[action](ss, p || {});
+    return { ok: true, data: data_(ss) };
+  } catch (e) {
+    return { ok: false, error: String(e.message || e) };
+  } finally {
+    try { lock.releaseLock(); } catch (e) {}
+  }
+}
